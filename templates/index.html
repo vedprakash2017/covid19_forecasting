@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  .col-3{float: left; width: 27.33%; margin: 40px 3%; position: relative;} /* necessary to give position: relative to parent. */
+input[type="number"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;margin: 2%}
+  </style>
+  <body>
+    <form class="" action="{{ url_for('my_form') }}" method="post">
+
+      <div class="col-3">
+        <input type="number" name="c6" placeholder="6mon-3yr" required>
+        <input type="number" name="sw" placeholder="Wheat ">
+        <input type="number" name="sr" placeholder="Rice">
+        <input type="number" name="ss" placeholder="Soyabean">
+        <input type="number" name="sm" placeholder="Murmura">
+        <input type="number" name="sc" placeholder="Chna">
+        <input type="number" name="sd" placeholder="Chna dal">
+        <input type="number" name="su" placeholder="Sugar">
+        <input type="number" name="so" placeholder="Oil">
+      </div>
+      <div class="col-3">
+        <input type="number" name="c3" placeholder="3-6" required>
+        <input type="number" name="tw" placeholder="">
+        <input type="number" name="tr" placeholder="">
+        <input type="number" name="ts" placeholder="">
+        <input type="number" name="tm" placeholder="">
+        <input type="number" name="tc" placeholder="">
+        <input type="number" name="td" placeholder="">
+        <input type="number" name="tu" placeholder="">
+        <input type="number" name="to" placeholder="">
+      </div>
+      <div class="col-3">
+        <input type="number" name="cpl" placeholder="p,l" required>
+        <input type="number" name="pw" placeholder="">
+        <input type="number" name="pr" placeholder="">
+        <input type="number" name="ps" placeholder="">
+        <input type="number" name="pm" placeholder="">
+        <input type="number" name="pc" placeholder="">
+        <input type="number" name="pd" placeholder="">
+        <input type="number" name="pu" placeholder="">
+        <input type="number" name="po" placeholder="">
+      </div>
+      <div style="margin-left:42%">
+      <input type="submit" name="" value="submit" style="width:30%;height:130%;font-size:170%">
+      <div>
+    </form>
+  </body>
+</html>

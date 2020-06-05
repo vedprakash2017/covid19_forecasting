@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style media="screen">
+    *{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html{
+  font-family: 'Poppins';
+  font-size: 10px;
+}
+body{
+  background-color: rgba(102,153,153,0.1);
+}
+h1{
+  text-align: center;
+  font-size: 3.6em;
+  text-transform: capitalize;
+  color: #3D5B5B;
+}
+.boldy{
+  font-weight: 900;
+  color: #3D5B5B;
+}
+.container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .text{
+  width: 50%;
+  margin-top: 5em;
+  padding-right : 10em;
+}
+.container2 {
+  width: 100%;
+  margin-top: 5em;
+}
+.text__2{
+  padding-left : 5rem;
+  padding-right : 5rem;
+  text-align-justify;}
+.text__2 p{
+  font-size: 2rem;
+}
+table{
+  margin-top: 5em;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+caption{
+  font-size: 1.3em;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+th{
+  padding: 10px 15px;
+  text-transform: capitalize;
+}
+td{
+  padding: 10px 15px;
+  font-size: 4em;
+  text-align:center
+}
+
+thead{
+  background: #669999;
+  color: rgb(209,224,224);
+  font-size: 2em;
+}
+tbody tr:nth-child(even){
+  background: rgba(102,153,153,0.2);
+}
+
+tfoot tr:first-child td{
+  /*background: rgba(102,153,153,0.2);*/
+  border-bottom: 3px solid #669999;
+}
+/*not sure about
+total row, not necessary - too much*/
+
+.text p{
+  font-size: 2rem;
+}
+.text h2{
+  font-size: 2.8rem;
+  margin-bottom: 1.2em;
+  text-transform: capitalize;
+  color: #3D5B5B;
+}
+.text__2 h2{
+  font-size: 2.8rem;
+  margin-bottom: 1.2rem;
+  text-transform: capitalize;
+  color: #3D5B5B;
+}
+h3{
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  text-transform: capitalize;
+  color: #3D5B5B;
+}
+#footer{
+  margin-top: 4em;
+  text-align: center;
+  padding: 4em;
+  background-color: rgba(102,153,153,0.1);
+}
+#footer a{
+  text-decoration: none;
+  color: #3D5B5B;
+  font-weight: 600;
+  font-size: 3.4em;
+}
+#footer a:hover{
+  padding: 0.2em;
+  border: 2px dashed #3D5B5B;
+  border-radius: 0.5em;
+}
+#footer p{
+  font-size: 1.4em;
+  color: #3D5B5B;
+  font-weight: 600;
+  margin-top: 1em;
+}
+@media screen and (max-width: 1320px){
+  .container .text{padding-right: 5rem;}
+  .container .text p{font-size: 1.8rem;}
+}
+@media screen and (max-width: 1024px){
+  .container .text p{font-size: 1.6rem;}
+  .container .text{padding-right: 5rem;}
+  .text__2 p{text-align: justify;}
+}
+@media screen and (max-width: 768px){
+  .container{flex-direction: column;}
+  .container .text{width: 100%; padding-left: 5rem;}
+  .container .text p{text-align: justify;font-size: 1.8rem;}
+  .container .text h2{text-align: center;}
+  .text__2 h2{text-align: center;}
+  .text__2{padding-left: 5rem;padding-right: 5rem;font-size: 1.8rem;}
+}
+@media screen and (max-width: 520px){
+  #footer a{font-size: 1.5rem;}
+  #footer{background-color: rgba(102,153,153,0.0);
+  }
+  thead{font-size: 1.9rem;}
+  td{font-size: 1.4rem;}
+  h1{font-size: 2.4rem;}
+}
+@media screen and (max-width: 320px){
+  #footer a{font-size: 1.5rem;}
+  thead{font-size: 1.5rem;}
+  td{font-size: 1.2rem;}
+  h1{font-size: 1.5rem;}
+  .container .text p{font-size: 1.5rem;}
+  .container .text{padding: 0;}
+  .text__2 p {font-size: 1.5rem;}
+}
+  </style>
+  <body>
+    <!-- <table>
+      {% for key, value in result.items() %}
+   <tr>
+        <th> {{ key }} </th>
+        <td> {{ value }} </td>
+   </tr>
+   {% endfor %}
+    </table> -->
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
+<h1>Report</h1>
+<div class='container'>
+<table>
+    <!--<caption>ESS9 - 2018 Belgium</caption>-->
+  <thead>
+  <tr>
+    <th scope='col'>Items</th>
+    <th scope='col'>Total(Kg)</th>
+  </tr>
+  </thead>
+
+  <tbody>
+    {% for key, value in result.items() %}
+  <tr>
+    <td>{{ key }}</td>
+    <td class='freq'>{{ value }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+
+
+  </body>
+</html>
