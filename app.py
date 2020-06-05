@@ -39,6 +39,4 @@ def my_form():
         return render_template('res.html',result=result)
 
 if __name__ == '__main__':
-     app.debug = True
-app.run()
-app.run(debug = True)
+    app.run()
