@@ -3,16 +3,15 @@
 {% block graph %}
 
 {% for j in range(3) %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
 
 
 <div class="box tab">
   <div class="wrap">
+    
     {% set c = chart[j][1] %}
     {% set m = chart[j][2] %}
     <!-- <h1> {{ chart[j][2] }}</h1> -->
-    <canvas id="{{ chart[j][0] }}" width="450" height="280" style="width:100%; height: 200px;"></canvas>
+    <canvas id="{{ chart[j][0] }}"  style="width:100%; height: 200px;"></canvas>
 
     <script>
 var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
