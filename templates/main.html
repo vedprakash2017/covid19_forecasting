@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+  <style>
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html{
+  font-family: 'Poppins';
+  font-size: 10px;
+}
+body{
+  background-color: rgba(102,153,153,0.1);
+}
+h1{
+  text-align: center;
+  font-size: 3.6em;
+  text-transform: capitalize;
+  color: #3D5B5B;
+}
+
+
+
+
+td,
+th {
+  padding:10px;
+}
+.boldy{
+  font-weight: 900;
+  color: #3D5B5B;
+}
+.container1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container1 .text{
+  width: 50%;
+  margin-top: 5em;
+  padding-right : 10em;
+}
+.container2 {
+  width: 100%;
+  margin-top: 5em;
+}
+.text__2{ 
+  padding-left : 5rem; 
+  padding-right : 5rem;
+  text-align-justify;}
+.text__2 p{
+  font-size: 2rem;
+}
+table{
+  /*margin-top: 5em;*/
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+caption{
+  font-size: 1.3em;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+th , td{
+  padding: 10px 15px;
+  text-transform: capitalize;
+      text-align: center;
+}
+td{
+  padding: 1px 20px;
+  font-size: 1.2em;
+}
+
+thead{
+  background: #669999;
+  color: rgb(209,224,224);
+  font-size: 2em;
+}
+tbody tr:nth-child(even){
+  background: rgba(102,153,153,0.2);
+}
+
+tfoot tr:first-child td{
+  /*background: rgba(102,153,153,0.2);*/
+  border-bottom: 3px solid #669999;
+}
+/*not sure about 
+total row, not necessary - too much*/
+
+.text p{
+  font-size: 2rem;
+}
+.text h2{
+  font-size: 2.8rem;
+  margin-bottom: 1.2em;
+  text-transform: capitalize; 
+  color: #3D5B5B;
+}
+.text__2 h2{
+  font-size: 2.8rem;
+  margin-bottom: 1.2rem;
+  text-transform: capitalize; 
+  color: #3D5B5B;
+}
+h3{
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  text-transform: capitalize; 
+  color: #3D5B5B;
+}
+#footer{
+  margin-top: 4em;
+  text-align: center;
+  padding: 4em;
+  background-color: rgba(102,153,153,0.1);
+}
+#footer a{
+  text-decoration: none;
+  color: #3D5B5B;
+  font-weight: 600;
+  font-size: 3.4em;
+}
+#footer a:hover{
+  padding: 0.2em;
+  border: 2px dashed #3D5B5B;
+  border-radius: 0.5em;
+}
+#footer p{
+  font-size: 1.4em;
+  color: #3D5B5B;
+  font-weight: 600;
+  margin-top: 1em;
+}
+@media screen and (max-width: 1320px){
+  .container .text{padding-right: 5rem;}
+  .container .text p{font-size: 1.8rem;}
+}
+@media screen and (max-width: 1024px){
+  .container .text p{font-size: 1.6rem;}
+  .container .text{padding-right: 5rem;}
+  .text__2 p{text-align: justify;}
+}
+@media screen and (max-width: 768px){
+  .container{flex-direction: column;}
+  .container .text{width: 100%; padding-left: 5rem;}
+  .container .text p{text-align: justify;font-size: 1.8rem;}
+  .container .text h2{text-align: center;}
+  .text__2 h2{text-align: center;}
+  .text__2{padding-left: 5rem;padding-right: 5rem;font-size: 1.8rem;}
+}
+@media screen and (max-width: 520px){
+  #footer a{font-size: 1.5rem;}
+  #footer{background-color: rgba(102,153,153,0.0);
+  }
+  thead{font-size: 1.9rem;}
+  td{font-size: 1.4rem;}
+  h1{font-size: 2.4rem;}
+}
+@media screen and (max-width: 320px){
+  #footer a{font-size: 1.5rem;}
+  thead{font-size: 1.5rem;}
+  td{font-size: 1.2rem;}
+  h1{font-size: 1.5rem;}
+  .container .text p{font-size: 1.5rem;}
+  .container .text{padding: 0;}
+  .text__2 p {font-size: 1.5rem;}
+}
+
+
+
+
+
+
+
+  body {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px 0;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //background: #aaa;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  //min-height: 200px;
+  border: 2px #ccc solid;
+  //color: #fff;
+}/*
+.wrap {
+height: 500px !important;
+}*/
+.tab{  font-family: 'Poppins';
+  /*font-size: 10px;*/}
+
+  .left_1{
+    align-self: center;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    font-family: "archia";
+    font-size: 12px;
+    margin-bottom: 2.5rem;
+    overflow-x: auto;
+    width: 28rem;
+}
+
+  </style>
+
+</head>
+
+<body>
+
+<h3>2 Columns</h3>
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="box tab">
+
+              <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
+              <div class='container1'>
+                  <table>
+                      <!--<caption>ESS9 - 2018 Belgium</caption>-->
+                    <thead>
+                    <tr>
+                      <th scope='col'>State</th>
+                      <th scope='col'>C</th>
+                    <th scope='col'>A</th>
+                    <th scope='col'>R</th>
+                    </tr>
+                    </thead>
+                    
+                    <tbody>
+                    
+                    {% for item in table %}
+          
+        
+
+                    <tr>
+                      <td>{{ item['state'] }}</td>
+                      <td class='freq'>{{ item['cum_confirmed'] }}</td>
+                      <td class='freq'>{{ item['cum_active'] }}</td>
+                      <td class='freq'>{{ item['cum_recovered'] }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                    
+                    <tfoot>
+                      <tr>
+                        <td>Total</td>
+                        <td>{{ total[0] }}</td>
+                        <td>{{ total[1] }}</td>
+                        <td>{{ total[2] }}</td>
+                      </tr>
+                    </tfoot>
+
+                  </table>
+      
+                </div>
+      </div>
+
+      <div class="box tab">
+            
+          <!-- <div class="left_1"> 
+            <select> 
+                <option>Select</option> 
+                <option value="C">C</option> 
+                <option value="Cplus">C++</option> 
+                <option value="Python">Python</option> 
+                <option value="Java">Java</option> 
+            </select> 
+          </div -->>
+      </div>
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+
+      <div class="box tab">
+            
+          <div class="left_1"> 
+            <select id = 'state' onchange="setGraph()" > 
+                    <option value="Total">Total</option> 
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Daman and Diu">Daman and Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Puducherry">Puducherry</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Total">Total</option>
+                    <option value="State Unassigned">State Unassigned</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+            </select> 
+          </div>
+      </div>
+        {% block graph %}{% endblock %}
+    </div>
+    
+  </div>
+</div>
+</body>
+</html>
