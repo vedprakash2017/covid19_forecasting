@@ -11,7 +11,7 @@
     {% set c = chart[j][1] %}
     {% set m = chart[j][2] %}
     <!-- <h1> {{ chart[j][2] }}</h1> -->
-    <canvas id="{{ chart[j][0] }}"  style="width:100%; height: 200px;"></canvas>
+    <canvas id="{{ chart[j][0] }}"  height = '150px'></canvas>
 
     <script>
 var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
