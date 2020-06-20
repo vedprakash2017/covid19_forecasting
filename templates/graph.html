@@ -2,19 +2,47 @@
 
 {% block graph %}
 
-{% for j in range(3) %}
-
+<div class="box tab">
+  <div id="wrap1">
+    <canvas id="chart1"></canvas>
+  </div>
+</div>
 
 <div class="box tab">
-  <div class="wrap">
-    
-    {% set c = chart[j][1] %}
-    {% set m = chart[j][2] %}
-    <!-- <h1> {{ chart[j][2] }}</h1> -->
-    <canvas id="{{ chart[j][0] }}"></canvas>
+  <div id="wrap2">
+    <canvas id="chart2"></canvas>
+  </div>
+</div>
 
-    <script>
-var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
+<div class="box tab">
+  <div id="wrap3">
+    <canvas id="chart3"></canvas>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function ongraph() 
+{
+
+{% for j in range(3)%}
+
+{% set ch0 = chart[j][0] %}
+{% set ch1 = chart[j][1] %}
+{% set ch2 = chart[j][2] %}
+
+var ctx = document.getElementById('{{ch0}}').getContext('2d');
 
       var chart = new Chart(ctx, {
         type : 'line',
@@ -24,7 +52,7 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
                   [
                     {% for i in gdata %}
                       {% if i['state'] == 'Total'%}
-                      {% if i[c] != -1 %}
+                      {% if i[ch1] != -1 %}
                         "{{ i['date'] }}",
                       {% endif %}
                       {% endif %}
@@ -33,14 +61,14 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
               datasets : 
                 [
                   {            
-                    label: '{{ m }}' ,
+                    label: '{{ch2}}' ,
                     // backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data : [
                               {% for i in gdata %}
                                 {% if i['state'] == 'Total'%}
-                                  {% if i[c] != -1%}
-                                  "{{ i[c] }}",
+                                  {% if i[ch1] != -1%}
+                                  "{{ i[ch1] }}",
                                   
                                 {% endif %}
                                 {% endif %}
@@ -65,34 +93,40 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
                       }
 
             });
-    </script>
-  </div>
-</div>
 
-{% endfor %}
+{%endfor%}
 
-{% endblock %}
+}
 
 
+function setGraph() 
+{
+  {% for j in range(3)%}
 
+  {% set ch0 = chart[j][0] %}
+  {% set ch1 = chart[j][1] %}
+  {% set ch2 = chart[j][2] %}
+  {% set ch3 = chart[j][3] %}
 
-{% block graph1 %}
+  var wrap = document.getElementById('{{ ch3 }}');
+  {{ ch3 }}.innerHTML = '&nbsp;';
+  $('#{{ch3}}').append('<canvas id="{{ch0}}"></canvas>');
 
-{% for j in range(3) %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  var s = document.getElementById('state').value;
+  var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
 
+  for (var i = 0 ; i<38; i++) {
+    
+    if(s == stt[i])
+      {break;}
+  }
 
+  {% for p in range(38)%}
+    if(i == {{ p }})
+    {
+      
 
-<div class="box tab">
-  <div class="wrap">
-    {% set c = chart[j][1] %}
-    {% set m = chart[j][2] %}
-    <!-- <h1> {{ chart[j][2] }}</h1> -->
-    <canvas id="{{ chart[j][0] }}" width="450" height="280" style="width:100%; height: 200px;"></canvas>
-
-    <script>
-alert(s);
-var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
+  var ctx = document.getElementById('{{ch0}}').getContext('2d');
 
       var chart = new Chart(ctx, {
         type : 'line',
@@ -101,8 +135,8 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
               labels : 
                   [
                     {% for i in gdata %}
-                      {% if i['state'] == 'Total'%}
-                      {% if i[c] != -1 %}
+                      {% if i['state'] == st[p] %}
+                      {% if i[ch1] != -1 %}
                         "{{ i['date'] }}",
                       {% endif %}
                       {% endif %}
@@ -111,14 +145,14 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
               datasets : 
                 [
                   {            
-                    label: '{{ m }}' ,
+                    label: '{{ch2}}' ,
                     // backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data : [
                               {% for i in gdata %}
-                                {% if i['state'] == 'Total'%}
-                                  {% if i[c] != -1%}
-                                  "{{ i[c] }}",
+                                {% if i['state'] == st[p] %}
+                                  {% if i[ch1] != -1%}
+                                  "{{ i[ch1] }}",
                                   
                                 {% endif %}
                                 {% endif %}
@@ -129,23 +163,29 @@ var ctx = document.getElementById('{{ chart[j][0] }}').getContext('2d');
                 ] 
               },
               options: {
-                responsive:'false',
+                maintainAspectRatio:false,
                 scales: {
                   xAxes: [{
                                 type: 'time',
                                 ticks: {
                                 autoSkip: true,
-                                maxTicksLimit: 20
+                                maxTicksLimit: 20,
+                                fontSize: 10
                             }
                         }]
                         }
                       }
 
             });
-    </script>
-  </div>
-</div>
 
-{% endfor %}
+
+
+    }
+  {% endfor %}
+  {% endfor %}  
+}
+
+
+    </script>
 
 {% endblock %}

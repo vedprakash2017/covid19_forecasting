@@ -6,6 +6,6 @@ with open('TableData.json') as f:
 h = ['ved']
 
 for i in data:
-	print("<option value=\""+i['state']+"\">"+i['state']+"</option>")
+	print('\''+i['state']+'\'',end=',')
 
 print(h)

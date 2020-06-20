@@ -8,6 +8,7 @@
   <title>{{ title }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 
@@ -205,10 +206,10 @@ h3{
   padding: 10px;
   width: 100%;
   //min-height: 200px;
-  border: 2px #ccc solid;
+  /*border: 2px #ccc solid;*/
   //color: #fff;
 }
-.wrap {
+#wrap1,#wrap2,#wrap3{
   position: relative; 
   height:30vh; 
   width:80vw
@@ -232,7 +233,7 @@ h3{
 
 </head>
 
-<body>
+<body onload="ongraph()">
 
 <h2> Covid19 Forecasting </h2>
 <div class="container">
@@ -341,8 +342,6 @@ h3{
                     <option value="Telangana">Telangana</option>
                     <option value="Tamil Nadu">Tamil Nadu</option>
                     <option value="Tripura">Tripura</option>
-                    <option value="Total">Total</option>
-                    <option value="State Unassigned">State Unassigned</option>
                     <option value="Uttar Pradesh">Uttar Pradesh</option>
                     <option value="Uttarakhand">Uttarakhand</option>
                     <option value="West Bengal">West Bengal</option>
