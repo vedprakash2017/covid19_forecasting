@@ -8,41 +8,12 @@
   </div>
 </div>
 
-<div class="box tab">
-  <div id="wrap2">
-    <canvas id="chart2"></canvas>
-  </div>
-</div>
-
-<div class="box tab">
-  <div id="wrap3">
-    <canvas id="chart3"></canvas>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
 
 function ongraph() 
 {
 
-{% for j in range(3)%}
-
-{% set ch0 = chart[j][0] %}
-{% set ch1 = chart[j][1] %}
-{% set ch2 = chart[j][2] %}
-
-var ctx = document.getElementById('{{ch0}}').getContext('2d');
+var ctx = document.getElementById('chart1').getContext('2d');
 
       var chart = new Chart(ctx, {
         type : 'line',
@@ -52,7 +23,7 @@ var ctx = document.getElementById('{{ch0}}').getContext('2d');
                   [
                     {% for i in gdata %}
                       {% if i['state'] == 'Total'%}
-                      {% if i[ch1] != -1 %}
+                      {% if i['cum_confirmed'] != -1 %}
                         "{{ i['date'] }}",
                       {% endif %}
                       {% endif %}
@@ -61,20 +32,47 @@ var ctx = document.getElementById('{{ch0}}').getContext('2d');
               datasets : 
                 [
                   {            
-                    label: '{{ch2}}' ,
-                    // backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    label:  'Confirmed',
+                    borderColor: 'rgb(245, 66, 66)',
                     data : [
                               {% for i in gdata %}
                                 {% if i['state'] == 'Total'%}
-                                  {% if i[ch1] != -1%}
-                                  "{{ i[ch1] }}",
+                                  {% if i['cum_confirmed'] != -1%}
+                                  "{{ i['cum_confirmed'] }}",
                                   
                                 {% endif %}
                                 {% endif %}
                               {% endfor %}
                             ]
-                  }
+                  },
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 245, 114)',
+                    data : [
+                              {% for i in gdata %}
+                                {% if i['state'] == 'Total'%}
+                                  {% if i['cum_active'] != -1%}
+                                  "{{ i['cum_active'] }}",
+                                  
+                                {% endif %}
+                                {% endif %}
+                              {% endfor %}
+                            ]
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 135, 245)',
+                    data : [
+                              {% for i in gdata %}
+                                {% if i['state'] == 'Total'%}
+                                  {% if i['cum_recovered'] != -1%}
+                                  "{{ i['cum_recovered'] }}",
+                                  
+                                {% endif %}
+                                {% endif %}
+                              {% endfor %}
+                            ]
+                  },
 
                 ] 
               },
@@ -87,30 +85,25 @@ var ctx = document.getElementById('{{ch0}}').getContext('2d');
                                 autoSkip: true,
                                 maxTicksLimit: 20,
                                 fontSize: 10
-                            }
+                        }
                         }]
                         }
                       }
 
             });
 
-{%endfor%}
 
 }
 
 
 function setGraph() 
 {
-  {% for j in range(3)%}
 
-  {% set ch0 = chart[j][0] %}
-  {% set ch1 = chart[j][1] %}
-  {% set ch2 = chart[j][2] %}
-  {% set ch3 = chart[j][3] %}
 
-  var wrap = document.getElementById('{{ ch3 }}');
-  {{ ch3 }}.innerHTML = '&nbsp;';
-  $('#{{ch3}}').append('<canvas id="{{ch0}}"></canvas>');
+
+  var wrap = document.getElementById('wrap1');
+  wrap1.innerHTML = '&nbsp;';
+  $('#wrap1').append('<canvas id="chart1"></canvas>');
 
   var s = document.getElementById('state').value;
   var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
@@ -126,7 +119,7 @@ function setGraph()
     {
       
 
-  var ctx = document.getElementById('{{ch0}}').getContext('2d');
+  var ctx = document.getElementById('chart1').getContext('2d');
 
       var chart = new Chart(ctx, {
         type : 'line',
@@ -136,7 +129,7 @@ function setGraph()
                   [
                     {% for i in gdata %}
                       {% if i['state'] == st[p] %}
-                      {% if i[ch1] != -1 %}
+                      {% if i['cum_confirmed'] != -1 %}
                         "{{ i['date'] }}",
                       {% endif %}
                       {% endif %}
@@ -144,21 +137,47 @@ function setGraph()
                   ],
               datasets : 
                 [
-                  {            
-                    label: '{{ch2}}' ,
-                    // backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                  { label:  'Confirmed',          
+                    borderColor: 'rgb(245, 66, 66)',
                     data : [
                               {% for i in gdata %}
                                 {% if i['state'] == st[p] %}
-                                  {% if i[ch1] != -1%}
-                                  "{{ i[ch1] }}",
+                                  {% if i['cum_confirmed'] != -1%}
+                                  "{{ i['cum_confirmed'] }}",
                                   
                                 {% endif %}
                                 {% endif %}
                               {% endfor %}
                             ]
-                  }
+                  },
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 245, 114)',
+                    data : [
+                              {% for i in gdata %}
+                                {% if i['state'] == st[p] %}
+                                  {% if i['cum_active'] != -1%}
+                                  "{{ i['cum_active'] }}",
+                                  
+                                {% endif %}
+                                {% endif %}
+                              {% endfor %}
+                            ]
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 135, 245)',
+                    data : [
+                              {% for i in gdata %}
+                                {% if i['state'] == st[p] %}
+                                  {% if i['cum_recovered'] != -1%}
+                                  "{{ i['cum_recovered'] }}",
+                                  
+                                {% endif %}
+                                {% endif %}
+                              {% endfor %}
+                            ]
+                  },
 
                 ] 
               },
@@ -181,7 +200,6 @@ function setGraph()
 
 
     }
-  {% endfor %}
   {% endfor %}  
 }
 
