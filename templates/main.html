@@ -228,8 +228,13 @@ h3{
     overflow-x: auto;
     width: 28rem;
 }
-
+svg path:hover
+{
+  fill:#0d408c; 
+  stroke:#FF4136;
+}
   </style>
+}
 
 </head>
 
@@ -305,8 +310,10 @@ h3{
 
       <div class="box tab">
             
-          <div class="left_1"> 
-            <select id = 'state' onchange="setGraph()" > 
+          <div class="wrap"> 
+            <div id="state" value="Total" ></div>
+            {% block map %} {% endblock %}
+            <!-- <select id = 'state' onchange="setGraph()" > 
                     <option value="Total">Total</option> 
                     <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                     <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -345,7 +352,7 @@ h3{
                     <option value="Uttar Pradesh">Uttar Pradesh</option>
                     <option value="Uttarakhand">Uttarakhand</option>
                     <option value="West Bengal">West Bengal</option>
-            </select> 
+            </select>  -->
           </div>
       </div>
         {% block graph %}{% endblock %}
