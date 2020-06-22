@@ -10,7 +10,7 @@ with open('tableData.json') as f:
 
 with open('GraphData.json') as f:
   gdata = json.load(f)
-
+g1data = gdata
 for i in gdata:
     if i["state"] == 'Total':
         i["cum_confirmed"] = int(i["cum_confirmed"])
@@ -40,8 +40,6 @@ for i in data:
     t_a = t_a+int(i['cum_active'])
     t_r = t_r+int(i['cum_recovered'])
 
-chart = [['chart1','cum_confirmed','Confirmed','wrap1'],['chart2','cum_active','Active','wrap2'],['chart3','cum_recovered','Recovered','wrap3']]
-# ['chart3','cum_tested','Tested']
 total = [t_c,t_a,t_r]
 
 d = {'labels':[967.67, 1190.89, 1079.75, 1349.19,2328.91, 2504.28, 2873.83, 4764.87,4349.29, 6458.30, 9907, 16297],'values':[967.67, 1190.89, 1079.75, 1349.19,2328.91, 2504.28, 2873.83, 4764.87,4349.29, 6458.30, 9907, 16297]}
@@ -49,7 +47,7 @@ d = {'labels':[967.67, 1190.89, 1079.75, 1349.19,2328.91, 2504.28, 2873.83, 4764
 def line():
     line_labels=d['labels']
     line_values=d['values']
-    return render_template('graph.html', title='Covid19', max=17000, labels=line_labels, values=line_values,table = data,total = total,gdata = gdata,chart = chart,st = st)
+    return render_template('graph.html', title='Covid19', max=17000, labels=line_labels, values=line_values,table = data,total = total,gdata = gdata,st = st,g1data = g1data)
 
 if __name__ == '__main__':
     app.run()

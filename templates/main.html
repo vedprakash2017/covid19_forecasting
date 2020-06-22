@@ -201,6 +201,11 @@ h3{
   height:45vh; 
   width:80vw
 }
+#wrap2{
+  position: relative; 
+  height:45vh; 
+  width:80vw
+}
 .wrap{
   width: 30em;
 }
@@ -226,7 +231,7 @@ svg path:hover
 
 </head>
 
-<body onload="ongraph()">
+<body onload="ongraph();ongraph1()" >
 
 
 <h2> Covid19 Forecasting </h2>
@@ -298,7 +303,65 @@ svg path:hover
             {% block graph %}{% endblock %}
 
     </div>
+
     
+  </div>
+
+  <div class="row">
+    
+    <div class="col-xs-12 col-sm-6 col-md-6">
+      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">ForeCasting Table</h3>
+        <div class="box tab">
+
+              <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
+              <div class='container1'>
+                  <table>
+
+                    <thead>
+                    <tr>
+                      <th scope='col'>Day</th>
+                      <th scope='col'>C</th>
+                    <th scope='col'>A</th>
+                    <th scope='col'>R</th>
+                    </tr>
+                    </thead>
+                    
+                    <tbody>
+                    
+                    {% for day in range(1,11) %}
+          
+        
+
+                    <tr>
+                      <td>{{ day }}</td>
+                      <td class='freq'>100000</td>
+                      <td class='freq'>100000</td>
+                      <td class='freq'>100000</td>
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                    
+                    <tfoot>
+                      <tr>
+                        <td>Total</td>
+                        <td>{{ total[0] }}</td>
+                        <td>{{ total[1] }}</td>
+                        <td>{{ total[2] }}</td>
+                      </tr>
+                    </tfoot>
+
+                  </table>
+      
+                </div>
+      </div>
+
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6">
+      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
+      {% block graph1 %}{% endblock %}
+    </div>
   </div>
 </div>
 </body>
