@@ -214,6 +214,9 @@ h3{
   height:30vh; 
   width:80vw
 }
+.wrap{
+  width: 30em;
+}
 .tab{  font-family: 'Poppins';
   /*font-size: 10px;*/}
   .left_1{
@@ -233,11 +236,11 @@ svg path:hover
   stroke:#FF4136;
 }
   </style>
-}
 
 </head>
 
 <body onload="ongraph()">
+
 
 <h2> Covid19 Forecasting </h2>
 <div class="container">
@@ -309,9 +312,9 @@ svg path:hover
 
       <div class="box tab">
             
-          <div class="wrap"> 
             <div id="state" value="Total" ></div>
-            {% block map %} {% endblock %}
+            <div class="wrap">
+            {% block map %} {% endblock %}</div>
             <!-- <select id = 'state' onchange="setGraph()" > 
                     <option value="Total">Total</option> 
                     <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -353,7 +356,7 @@ svg path:hover
                     <option value="West Bengal">West Bengal</option>
             </select>  -->
           </div>
-      </div>
+      
         {% block graph %}{% endblock %}
     </div>
     
