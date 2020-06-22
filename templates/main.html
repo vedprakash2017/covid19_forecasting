@@ -239,6 +239,11 @@ svg path:hover
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6">
         <div class="box tab">
+                  <div id="state" value="Total" ></div>
+                  <div class="wrap">
+                  {% block map %} {% endblock %}</div>
+        </div>
+        <div class="box tab">
 
               <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
               <div class='container1'>
@@ -283,34 +288,13 @@ svg path:hover
       
                 </div>
       </div>
-
-      <div class="box tab">
-            
-
-      </div>
-
-
-    </div>
+</div>
 
     <div class="col-xs-12 col-sm-6 col-md-6">
-
-              <div class="box tab">
-                  <div id="state" value="Total" ></div>
-                  <div class="wrap">
-                  {% block map %} {% endblock %}</div>
-              </div>
             <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
 
             {% block graph %}{% endblock %}
-
-    </div>
-
-    
-  </div>
-
-  <div class="row">
-    
-    <div class="col-xs-12 col-sm-6 col-md-6">
+            {% block graph1 %}{% endblock %}
       <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">ForeCasting Table</h3>
         <div class="box tab">
 
@@ -356,12 +340,13 @@ svg path:hover
                   </table>
       
                 </div>
-      </div>
+            </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-6">
-      {% block graph1 %}{% endblock %}
+
+
     </div>
+
+    
   </div>
-</div>
 </body>
 </html>
