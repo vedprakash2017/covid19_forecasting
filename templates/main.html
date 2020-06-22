@@ -231,7 +231,7 @@ svg path:hover
 
 </head>
 
-<body onload="ongraph();ongraph1()" >
+<body onload="ongraph()" >
 
 
 <h2> Covid19 Forecasting </h2>
@@ -300,6 +300,7 @@ svg path:hover
                   {% block map %} {% endblock %}</div>
               </div>
             <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
+
             {% block graph %}{% endblock %}
 
     </div>

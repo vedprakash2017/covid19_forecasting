@@ -6,68 +6,47 @@
   </div>
 </div>
 <script>
-function ongraph() 
+
+function ongraph()
 {
-var ctx = document.getElementById('chart1').getContext('2d');
+
+  var date = [];
+  var c= [];
+  var a= [];
+  var r= [];
+  {% for i in gdata['Total'] %}
+      date.push('{{ i[0] }}')
+      c.push('{{ i[1] }}')
+      a.push('{{ i[2] }}')  
+      r.push('{{ i[3] }}')      
+  {% endfor %}
+
+
+
+  var ctx = document.getElementById('chart1').getContext('2d');
       var chart = new Chart(ctx, {
         type : 'line',
         data : {
-              labels : 
-                  [
-                    {% for i in gdata %}
-                      {% if i['state'] == 'Total'%}
-                      {% if i['cum_confirmed'] != -1 %}
-                        "{{ i['date'] }}",
-                      {% endif %}
-                      {% endif %}
-                    {% endfor %}
-                  ],
+              labels : date,
               datasets : 
                 [
                   {            
                     label:  'Confirmed',
                     borderColor: 'rgb(245, 66, 66)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == 'Total'%}
-                                  {% if i['cum_confirmed'] != -1%}
-                                  "{{ i['cum_confirmed'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :c,
                   },
                   {            
                     label:  'Active',
                     borderColor: 'rgb(66, 135, 245)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == 'Total'%}
-                                  {% if i['cum_active'] != -1%}
-                                  "{{ i['cum_active'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :a,
                   },
                   {            
                     label:  'Recovered',
                     borderColor: 'rgb(66, 245, 114)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == 'Total'%}
-                                  {% if i['cum_recovered'] != -1%}
-                                  "{{ i['cum_recovered'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :r,
                   },
 
                 ] 
@@ -95,11 +74,20 @@ var ctx = document.getElementById('chart1').getContext('2d');
             });
 
 }
+
 function setGraph() 
 {
+
+  var date = [];
+  var c= [];
+  var a= [];
+  var r= [];
   var wrap = document.getElementById('wrap1');
   wrap1.innerHTML = '&nbsp;';
   $('#wrap1').append('<canvas id="chart1"></canvas>');
+
+
+
   var s = document.getElementById('state').value;
   document.getElementById('state_name').innerHTML = s;
   var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
@@ -110,65 +98,36 @@ for (var i = 0 ; i<38; i++) {
   {% for p in range(38)%}
     if(i == {{ p }})
     {
-  var ctx = document.getElementById('chart1').getContext('2d');
+      {% for i in gdata[st[p]] %}
+      date.push('{{ i[0] }}')
+      c.push('{{ i[1] }}')
+      a.push('{{ i[2] }}')  
+      r.push('{{ i[3] }}')      
+      {% endfor %}
+
+    var ctx = document.getElementById('chart1').getContext('2d');
       var chart = new Chart(ctx, {
         type : 'line',
         data : {
-              labels : 
-                  [
-                    {% for i in gdata %}
-                      {% if i['state'] == st[p] %}
-                      {% if i['cum_confirmed'] != -1 %}
-                        "{{ i['date'] }}",
-                      {% endif %}
-                      {% endif %}
-                    {% endfor %}
-                  ],
+              labels :date,
               datasets : 
                 [
                   { label:  'Confirmed',          
                     borderColor: 'rgb(245, 66, 66)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == st[p] %}
-                                  {% if i['cum_confirmed'] != -1%}
-                                  "{{ i['cum_confirmed'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :c,
                   },
                   {            
                     label:  'Active',
                     borderColor: 'rgb(66, 135, 245)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == st[p] %}
-                                  {% if i['cum_active'] != -1%}
-                                  "{{ i['cum_active'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :a,
                   },
                   {            
                     label:  'Recovered',
                     borderColor: 'rgb(66, 245, 114)',
                     pointRadius: 1,
-                    data : [
-                              {% for i in gdata %}
-                                {% if i['state'] == st[p] %}
-                                  {% if i['cum_recovered'] != -1%}
-                                  "{{ i['cum_recovered'] }}",
-                                  
-                                {% endif %}
-                                {% endif %}
-                              {% endfor %}
-                            ]
+                    data :r,
                   },
 
                 ] 
