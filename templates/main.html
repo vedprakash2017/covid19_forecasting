@@ -34,13 +34,6 @@ h1{
   color: #3D5B5B;
 }
 
-
-
-
-td,
-th {
-  /*padding:10px;*/
-}
 .boldy{
   font-weight: 900;
   color: #3D5B5B;
@@ -67,7 +60,6 @@ th {
   font-size: 2rem;
 }
 table{
-  /*margin-top: 5em;*/
   border-collapse: collapse;
   border-spacing: 0;
   margin-right: auto;
@@ -81,12 +73,10 @@ caption{
   font-weight: 600;
 }
 th , td{
-  /*padding: 10px 15px;*/
   text-transform: capitalize;
       text-align: center;
 }
 td{
-  /*padding: 1px 20px;*/
   font-size: 1.2em;
 }
 
@@ -100,11 +90,8 @@ tbody tr:nth-child(even){
 }
 
 tfoot tr:first-child td{
-  /*background: rgba(102,153,153,0.2);*/
   border-bottom: 3px solid #669999;
 }
-/*not sure about 
-total row, not necessary - too much*/
 
 .text p{
   font-size: 2rem;
@@ -211,14 +198,14 @@ h3{
 }
 #wrap1{
   position: relative; 
-  height:30vh; 
+  height:45vh; 
   width:80vw
 }
 .wrap{
   width: 30em;
 }
 .tab{  font-family: 'Poppins';
-  /*font-size: 10px;*/}
+}
   .left_1{
     align-self: center;
     border-radius: 3px;
@@ -233,7 +220,7 @@ h3{
 svg path:hover
 {
   fill:#0d408c; 
-  stroke:#FF4136;
+  stroke:#22bcc7;
 }
   </style>
 
@@ -251,7 +238,7 @@ svg path:hover
               <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
               <div class='container1'>
                   <table>
-                      <!--<caption>ESS9 - 2018 Belgium</caption>-->
+
                     <thead>
                     <tr>
                       <th scope='col'>State</th>
@@ -294,15 +281,7 @@ svg path:hover
 
       <div class="box tab">
             
-          <!-- <div class="left_1"> 
-            <select> 
-                <option>Select</option> 
-                <option value="C">C</option> 
-                <option value="Cplus">C++</option> 
-                <option value="Python">Python</option> 
-                <option value="Java">Java</option> 
-            </select> 
-          </div -->
+
       </div>
 
 
@@ -310,54 +289,14 @@ svg path:hover
 
     <div class="col-xs-12 col-sm-6 col-md-6">
 
-      <div class="box tab">
-            
-            <div id="state" value="Total" ></div>
-            <div class="wrap">
-            {% block map %} {% endblock %}</div>
-            <!-- <select id = 'state' onchange="setGraph()" > 
-                    <option value="Total">Total</option> 
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Daman and Diu">Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Ladakh">Ladakh</option>
-                    <option value="Lakshadweep">Lakshadweep</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Puducherry">Puducherry</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
-            </select>  -->
-          </div>
-      
-        {% block graph %}{% endblock %}
+              <div class="box tab">
+                  <div id="state" value="Total" ></div>
+                  <div class="wrap">
+                  {% block map %} {% endblock %}</div>
+              </div>
+            <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
+            {% block graph %}{% endblock %}
+
     </div>
     
   </div>
