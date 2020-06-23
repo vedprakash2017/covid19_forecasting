@@ -13,7 +13,7 @@ with open('GraphData.json') as f:
 with open('ForecastData.json') as f:
   fdata = json.load(f)
 
-with open('inferenceData.json') as f:
+with open('InferenceData.json') as f:
   f1data = json.load(f)
 
 
