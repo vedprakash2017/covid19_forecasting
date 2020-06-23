@@ -12,6 +12,568 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <!-- https://stackoverflow.com/questions/39399264/in-chartjs-is-it-possible-to-change-the-line-style-between-different-points -->
+
+
+
+<script>
+
+function ongraph()
+{
+
+  var date = [];
+  var c= [];
+  var a= [];
+  var r= [];
+  {% for i in gdata['Total'] %}
+      date.push('{{ i[0] }}')
+      c.push('{{ i[1] }}')
+      a.push('{{ i[2] }}')  
+      r.push('{{ i[3] }}')      
+  {% endfor %}
+
+
+
+  var ctx = document.getElementById('chart1').getContext('2d');
+      var chart = new Chart(ctx, {
+        type : 'line',
+        data : {
+              labels : date,
+              datasets : 
+                [
+                  {            
+                    label:  'Confirmed',
+                    borderColor: 'rgb(245, 66, 66)',
+                    pointRadius: 1,
+                    pointStyle: 'line',
+                    data :c,
+                  },
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    pointRadius: 1,
+                    pointStyle: 'line',
+                    data :a,
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    pointRadius: 1,
+                    pointStyle: 'line',
+                    data :r,
+                  },
+
+                ] 
+              },
+              options: {
+                legend: {
+                           labels: {
+            usePointStyle: true,
+            fontColor: 'white'
+         },
+                  display:true
+                  },
+                tooltips: {
+                   callbacks: {
+                      label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                                }
+                              }
+                    },
+                elements: {
+                  line: {
+                      fill: false,
+                      tension: 0
+                      }
+                  },
+                animation: {
+                  duration: 0 
+                  },
+                hover:{
+                  animationDuration: 0 
+                  },
+                responsiveAnimationDuration: 0 ,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                                type: 'time',
+                                time: {
+                                  unit:'week'
+
+                                },
+                                ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20,
+                                fontSize: 13,
+                                fontColor: "white"
+
+                            }
+                        }],
+
+                  yAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                              ticks : {
+                              beginAtZero: true,
+                              fontColor: "white"
+                            }
+                        }]
+                        }
+                      }
+            });
+
+}
+
+function setGraph() 
+{
+
+  var date = [];
+  var c= [];
+  var a= [];
+  var r= [];
+  var fdate = [];
+  var fc= [];
+  var fa= [];
+  var fr= [];
+      
+  var wrap = document.getElementById('wrap1');
+  wrap1.innerHTML = '&nbsp;';
+  $('#wrap1').append('<canvas id="chart1"></canvas>');
+
+
+
+  var s = document.getElementById('state').value;
+  document.getElementById('state_name').innerHTML = s;
+  var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
+for (var i = 0 ; i<38; i++) {
+    if(s == stt[i])
+      {break;}
+  }
+  {% for p in range(38)%}
+    if(i == {{ p }})
+    {
+      {% for i in gdata[st[p]] %}
+      date.push('{{ i[0] }}');
+      c.push('{{ i[1] }}');
+      a.push('{{ i[2] }}') ; 
+      r.push('{{ i[3] }}')  ;    
+      {% endfor %}
+
+      {% for j in fdata[st[p]] %}
+      fdate.push('{{ j[0] }}');
+      fc.push('{{ j[1] }}');
+      fa.push('{{ j[2] }}'); 
+      fr.push('{{ j[3] }}');    
+      {% endfor %}
+    var ctx = document.getElementById('chart1').getContext('2d');
+      var chart = new Chart(ctx, {
+        type : 'line',
+        data : {
+              labels :fdate,
+              datasets : 
+                [
+
+
+                  { label:  'Forecasted Confirmed',          
+                    borderColor: 'rgb(245, 66, 66)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fc,
+                  },
+                  {            
+                    label:  'Forecasted Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fa,
+                  },
+                  {            
+                    label:  'Forecasted Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fr,
+                  },
+
+
+                  { label:  'Confirmed',          
+                    borderColor: 'rgb(245, 66, 66)',
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :c,
+                  },
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :a,
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :r,
+                  },                  
+
+                ] 
+              },
+              options: {
+                legend: {
+                                  labels: {
+            usePointStyle: true,
+            fontColor: 'white'
+         },
+                  display:true
+                  },
+                tooltips: {
+                   callbacks: {
+                      label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                                }
+                              }
+                    },
+                elements: {
+                  line: {
+                      fill: false,
+                      tension: 0
+                      }
+                  },
+                animation: {
+                  duration: 0 
+                  },
+                hover:{
+                  animationDuration: 0 
+                  },
+                responsiveAnimationDuration: 0 ,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                                type: 'time',
+                                time: {
+                                  unit:'week'
+
+                                },
+                                ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20,
+                                fontSize: 13,
+                              fontColor: "white"
+
+                            }
+                        }],
+
+                  yAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                              ticks : {
+                              beginAtZero: true,
+                              fontColor: "white"
+                            }
+                        }]
+                        }
+                      }
+            });
+   }
+  {% endfor %}  
+}
+
+
+
+
+
+
+
+
+
+function ongraph1()
+{
+
+  var date = [];
+  var a= [];
+  var r= [];
+  {% for i in gdata['Total'] %}
+      date.push('{{ i[0] }}')
+      a.push('{{ i[1] }}')  
+      r.push('{{ i[2] }}')      
+  {% endfor %}
+
+
+
+  var ctx = document.getElementById('chart2').getContext('2d');
+      var chart = new Chart(ctx, {
+        type : 'line',
+        data : {
+              labels : date,
+              datasets : 
+                [
+                  
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    pointRadius: 1,
+                    pointStyle: 'line',
+                    data :a,
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    pointRadius: 1,
+                    pointStyle: 'line',
+                    data :r,
+                  },
+                ] 
+              },
+              options: {
+                legend: {
+                                  labels: {
+            usePointStyle: true,
+            fontColor: 'white'
+         },
+                  display:true
+                  },
+                tooltips: {
+                   callbacks: {
+                      label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                                }
+                              }
+                    },
+                elements: {
+                  line: {
+                      fill: false,
+                      tension: 0
+                      }
+                  },
+                animation: {
+                  duration: 0 
+                  },
+                hover:{
+                  animationDuration: 0 
+                  },
+                responsiveAnimationDuration: 0 ,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                                type: 'time',
+                                time: {
+                                  unit:'week'
+
+                                },
+                                ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20,
+                                fontSize: 13,
+                              fontColor: "white"
+
+                            }
+                        }],
+
+                  yAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                              ticks : {
+                              beginAtZero: true,
+                              fontColor: "white"
+                            }
+                        }]
+                        }
+                      }
+            });
+
+}
+
+function setGraph1() 
+{
+
+  var date = [];
+  var c= [];
+  var a= [];
+  var r= [];
+  var fdate = [];
+  var fa= [];
+  var fr= [];
+      
+  var wrap = document.getElementById('wrap2');
+  wrap2.innerHTML = '&nbsp;';
+  $('#wrap2').append('<canvas id="chart2"></canvas>');
+
+
+
+  var s = document.getElementById('state').value;
+  document.getElementById('state_name').innerHTML = s;
+  var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
+for (var i = 0 ; i<38; i++) {
+    if(s == stt[i])
+      {break;}
+  }
+  {% for p in range(38)%}
+    if(i == {{ p }})
+    {
+      var s1 = '';
+
+      {% for i in table2%}
+        {% if i['state'] == st[p] %}
+
+        s1 = s1 + "<tr><td>{{ i['date'] }}</td><td class='freq'>{{i['cum_confirmed']}}</td><td class='freq'>{{i['cum_active']}}</td><td class='freq'>{{i['cum_recovered']}}</td></tr>"
+        {%endif%}
+      {% endfor %}
+
+      s1 = s1+"<tfoot><tr><td></td><td></td><td></td><td></td></tr></tfoot>";
+      document.getElementById("f_table").innerHTML =s1;
+
+
+
+
+      {% for i in g1data[st[p]] %}
+      date.push('{{ i[0] }}');
+      a.push('{{ i[1] }}') ; 
+      r.push('{{ i[2] }}')  ;    
+      {% endfor %}
+
+      {% for j in f1data[st[p]] %}
+      fdate.push('{{ j[0] }}');
+      fa.push('{{ j[1] }}'); 
+      fr.push('{{ j[2] }}');    
+      {% endfor %}
+    var ctx = document.getElementById('chart2').getContext('2d');
+      var chart = new Chart(ctx, {
+        type : 'line',
+        data : {
+              labels :fdate,
+              datasets : 
+                [
+
+                  {            
+                    label:  'Forecasted Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fa,
+                  },
+                  {            
+                    label:  'Forecasted Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fr,
+                  },
+
+                  {            
+                    label:  'Active',
+                    borderColor: 'rgb(66, 135, 245)',
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :a,
+                  },
+                  {            
+                    label:  'Recovered',
+                    borderColor: 'rgb(66, 245, 114)',
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :r,
+                  },   
+
+                ] 
+              },
+              options: {
+                legend: {
+                                  labels: {
+            usePointStyle: true,
+            fontColor: 'white'
+         },
+                  display:true
+                  },
+                tooltips: {
+                   callbacks: {
+                      label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                                }
+                              }
+                    },
+                elements: {
+                  line: {
+                      fill: false,
+                      tension: 0
+                      }
+                  },
+                animation: {
+                  duration: 0 
+                  },
+                hover:{
+                  animationDuration: 0 
+                  },
+                responsiveAnimationDuration: 0 ,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                                type: 'time',
+                                time: {
+                                  unit:'week'
+
+                                },
+                                ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20,
+                                fontSize: 13,
+                              fontColor: "white"
+
+                            }
+                        }],
+
+                  yAxes: [{
+                                 gridLines: {
+                                 zeroLineColor: '#ffcc33',
+                                 color:'white',
+                                 lineWidth:0.3
+                                },
+                              ticks : {
+                              beginAtZero: true,
+                              fontColor: "white"
+                            }
+                        }]
+                        }
+                      }
+            });
+   }
+  {% endfor %}  
+}
+
+    </script>
   <style>
 
 
@@ -32,6 +594,12 @@ h1{
   font-size: 3.6em;
   text-transform: capitalize;
   color: #3D5B5B;
+}
+
+h3
+{
+color: #f5f8fc;
+
 }
 
 .boldy{
@@ -60,6 +628,7 @@ h1{
   font-size: 2rem;
 }
 table{
+  border: 2px solid white;
   border-collapse: collapse;
   border-spacing: 0;
   margin-right: auto;
@@ -81,12 +650,14 @@ td{
 }
 
 thead{
-  background: #669999;
+/*  background: #669999;
   color: rgb(209,224,224);
+*/
+  background: #94b7e3;
   font-size: 2em;
 }
 tbody tr:nth-child(even){
-  background: rgba(102,153,153,0.2);
+  background: #7085a1;
 }
 
 tfoot tr:first-child td{
@@ -112,7 +683,6 @@ h3{
   font-size: 2.2rem;
   margin-bottom: 1.2rem;
   text-transform: capitalize; 
-  color: #3D5B5B;
 }
 #footer{
   margin-top: 4em;
@@ -204,7 +774,7 @@ h3{
 #wrap2{
   position: relative; 
   height:55vh; 
-  width:55vw
+  width:85vw
 }
 .wrap{
   width: 30em;
@@ -224,14 +794,14 @@ h3{
 }
 svg path:hover
 {
-  fill:#0d408c; 
-  stroke:#22bcc7;
+  fill:#f5fcff; 
+  stroke:#093c52;
 }
   </style>
 
 </head>
 
-<body onload="ongraph();ongraph1();" >
+<body onload="ongraph();ongraph1();" style="background-color: #173645;color:white">
 
 
 <h2> Covid19 Forecasting </h2>
@@ -260,7 +830,7 @@ svg path:hover
                     
                     <tbody>
                     
-                    {% for item in table %}
+                    {% for item in table1 %}
           
         
 
@@ -294,9 +864,13 @@ svg path:hover
             <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
 
             {% block graph %}{% endblock %}
+
+      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Inference Graph</h3>
             {% block graph1 %}{% endblock %}
-      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">ForeCasting Table</h3>
-        <div class="box tab">
+
+
+      <h3 class="box" id = "state_name t1" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Forecasting Table</h3>
+        <div class="box tab" id ="t2" style="">
 
               <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
               <div class='container1'>
@@ -306,37 +880,30 @@ svg path:hover
                     <tr>
                       <th scope='col'>Day</th>
                       <th scope='col'>C</th>
-                    <th scope='col'>A</th>
-                    <th scope='col'>R</th>
+                      <th scope='col'>A</th>
+                      <th scope='col'>R</th>
                     </tr>
                     </thead>
                     
-                    <tbody>
+                    <tbody id='f_table'>
                     
-                    {% for day in range(1,11) %}
-          
-        
-
                     <tr>
-                      <td>{{ day }}</td>
-                      <td class='freq'>100000</td>
-                      <td class='freq'>100000</td>
-                      <td class='freq'>100000</td>
+                      <td>-</td>
+                      <td class='freq'>-</td>
+                      <td class='freq'>-</td>
+                      <td class='freq'>-</td>
                     </tr>
-
-                    {% endfor %}
-
-                    </tbody>
-                    
                     <tfoot>
                       <tr>
-                        <td>Total</td>
-                        <td>{{ total[0] }}</td>
-                        <td>{{ total[1] }}</td>
-                        <td>{{ total[2] }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                       </tr>
                     </tfoot>
 
+                    </tbody>
+                    
                   </table>
       
                 </div>
