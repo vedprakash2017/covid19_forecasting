@@ -86,4 +86,4 @@ def line():
     return render_template('graph.html', title='Covid19',table1 = data,table2 = fdata,total = total,st = st,gdata = g_data,g1data = g1_data,fdata = f_data,f1data = f1_data)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)
