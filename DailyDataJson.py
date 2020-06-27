@@ -13,6 +13,8 @@ def dd():
     import pandas as pd
     import numpy as np
     from datetime import datetime
+    import warnings
+    warnings.filterwarnings("ignore")
 
     # Fetching the state wise historical infection data
 
@@ -55,7 +57,7 @@ def dd():
     state_code_df = state_code_df.append(dict(zip(state_code_df.columns, ['Daman and Diu', 'dd'])), ignore_index=True)
     state_code_df = state_code_df.append(dict(zip(state_code_df.columns, ['Total', 'tt'])), ignore_index=True)
     data = data.merge(state_code_df, how='left').drop_duplicates()
-    data['cum_recovered'] = data['cum_recovered'] + data['cum_deceased']
+    data.loc[data.index,'cum_recovered'] = data['cum_recovered'] + data['cum_deceased']
     data = data[data['date'] >= '2020-04-10']
 
     # Fetching state wise testing data
@@ -71,8 +73,8 @@ def dd():
     state_testing_data= state_testing_data[state_testing_data['totaltested']!='']
     state_testing_data= state_testing_data.reset_index().drop(['index'], axis = 1)
     state_testing_data = state_testing_data.rename(columns={"updatedon":"date"})
-    state_testing_data['date'] = state_testing_data.apply(lambda x: datetime.strftime(datetime.strptime(x['date'], '%d/%m/%Y'), '%Y-%m-%d'), axis=1)
-    state_testing_data['totaltested'] = (state_testing_data['totaltested']).astype(int)
+    state_testing_data.loc[state_testing_data.index,'date'] = state_testing_data.apply(lambda x: datetime.strftime(datetime.strptime(x['date'], '%d/%m/%Y'), '%Y-%m-%d'), axis=1)
+    state_testing_data.loc[state_testing_data.index,'totaltested'] = (state_testing_data['totaltested']).astype(int)
 
     data = pd.merge(data, state_testing_data, on=['state','date'], how='left')
 
@@ -81,9 +83,9 @@ def dd():
     tableData = tableData.sort_values(by=['cum_confirmed'], ascending=False)
 
     #-- For thousand seperation
-    tableData['cum_confirmed'] = tableData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
-    tableData['cum_active'] = tableData['cum_active'].apply(lambda x : "{:,}".format(int(x)))
-    tableData['cum_recovered'] = tableData['cum_recovered'].apply(lambda x : "{:,}".format(int(x)))
+    tableData.loc[tableData.index,'cum_confirmed'] = tableData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
+    tableData.loc[tableData.index,'cum_active'] = tableData['cum_active'].apply(lambda x : "{:,}".format(int(x)))
+    tableData.loc[tableData.index,'cum_recovered'] = tableData['cum_recovered'].apply(lambda x : "{:,}".format(int(x)))
     #--
 
     TotalData = tableData[tableData['state'] == 'Total']

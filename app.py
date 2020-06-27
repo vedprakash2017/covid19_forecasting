@@ -1,15 +1,29 @@
 from flask import Flask, Markup, render_template
 import json
 import copy
-# import DailyDataJson
-# import InferenceForecastDataJson
+import DailyDataJson
+import InferenceForecastDataJson
+import time
+import atexit
 
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
+def change_data():
+    DailyDataJson.dd()
+    InferenceForecastDataJson.ifd()
 
-# # DailyDataJson.dd()
-# InferenceForecastDataJson.ifd()
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=change_data, trigger="cron", hour='00', minute='10')
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
+
+
 
 with open('tableData.json') as f:
   data = json.load(f)
@@ -18,6 +32,9 @@ with open('GraphData.json') as f:
   gdata = json.load(f)
 
 with open('ForecastData.json') as f:
+  tfdata = json.load(f)
+  
+with open('ForecastGData.json') as f:
   fdata = json.load(f)
 
 with open('InferenceData.json') as f:
@@ -93,7 +110,7 @@ total = [t_c,t_a,t_r]
 
 @app.route('/')
 def line():
-    return render_template('graph.html', title='Covid19',table1 = data,table2 = fdata,total = total,st = st,gdata = g_data,g1data = g1_data,fdata = f_data,f1data = f1_data)
+    return render_template('graph.html', title='Covid19',table1 = data,table2 = tfdata,total = total,st = st,gdata = g_data,g1data = g1_data,fdata = f_data,f1data = f1_data)
 
 if __name__ == '__main__':
     app.run(threaded=True)

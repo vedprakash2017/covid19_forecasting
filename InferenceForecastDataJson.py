@@ -21,7 +21,7 @@ def ifd():
     import cvxpy as cp
     import warnings
     import itertools
-    # warnings.filterwarnings("ignore")
+    warnings.filterwarnings("ignore")
     import statsmodels.api as sm
     from datetime import datetime, timedelta, date
 
@@ -161,8 +161,8 @@ def ifd():
 
 
     state_testing_data = state_test_data[['state','totaltested','updatedon']].drop_duplicates().dropna(how='any',axis=0)
-    state_testing_data= state_testing_data[state_testing_data['totaltested']!='']
-    state_testing_data= state_testing_data.reset_index().drop(['index'], axis = 1)
+    state_testing_data = state_testing_data[state_testing_data['totaltested']!='']
+    state_testing_data = state_testing_data.reset_index().drop(['index'], axis = 1)
     state_testing_data = state_testing_data.rename(columns={"updatedon":"date"})
     state_testing_data['date'] = state_testing_data.apply(lambda x: datetime.strftime(datetime.strptime(x['date'], '%d/%m/%Y'), '%Y-%m-%d'), axis=1)
     state_testing_data['totaltested'] = (state_testing_data['totaltested']).astype(int)
@@ -200,7 +200,7 @@ def ifd():
         data.loc[data_subset.index,'dailytested'] = dailytest
 
     data.loc[data[data['dailytested']<0].index, 'dailytested'] = 0
-    data['dailytested'] = data['dailytested'].replace({0.0:np.nan})
+    data.loc[data.index,'dailytested'] = data['dailytested'].replace({0.0:np.nan})
 
     for s in data['state'].unique():
         data_subset = data[data['state']==s]
@@ -294,7 +294,7 @@ def ifd():
                     constraints += [
                         beta[i][j] == 0.0,                
                     ]
-        cost = cp.sum_squares((DX1 + DR1) - cp.multiply(S1, (X1 * beta.T))) + cp.sum_squares(DR1 - (X1*gamma))
+        cost = cp.sum_squares((DX1 + DR1) - cp.multiply(S1, (X1 @ beta.T))) + cp.sum_squares(DR1 - (X1@gamma))
         objective = cp.Minimize(cost)
         prob = cp.Problem(objective, constraints)
         prob.solve()
@@ -454,13 +454,12 @@ def ifd():
             predicted_data.loc[index,'cum_recovered'] = cum_recovered
         predicted_data.loc[predicted_subset.index,'active'] = np.array(cum_active[1:]) - np.array(cum_active[:-1])
 
-    ForecastData = predicted_data[['state','date','cum_confirmed','cum_active','cum_recovered','totaltested']]
-
+    ForecastData = predicted_data[['state','date','cum_confirmed','cum_active','cum_recovered']]
+    ForecastData.to_json('ForecastGData.json',orient='records')
     #-- For thousand seperation
-    ForecastData['cum_confirmed'] = ForecastData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
-    ForecastData['cum_active'] = ForecastData['cum_active'].apply(lambda x : "{:,}".format(int(x)))
-    ForecastData['cum_recovered'] = ForecastData['cum_recovered'].apply(lambda x : "{:,}".format(int(x)))
-    ForecastData['totaltested'] = ForecastData['totaltested'].apply(lambda x : "{:,}".format(int(x)))
+    ForecastData.loc[ForecastData.index,'cum_confirmed'] = ForecastData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
+    ForecastData.loc[ForecastData.index,'cum_active'] = ForecastData['cum_active'].apply(lambda x : "{:,}".format(int(x)))
+    ForecastData.loc[ForecastData.index,'cum_recovered'] = ForecastData['cum_recovered'].apply(lambda x : "{:,}".format(int(x)))
     #--
 
     ForecastData.to_json('ForecastData.json',orient='records')

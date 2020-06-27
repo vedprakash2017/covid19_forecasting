@@ -146,6 +146,10 @@ function setGraph()
   var wrap = document.getElementById('wrap1');
   wrap1.innerHTML = '&nbsp;';
   $('#wrap1').append('<canvas id="chart1"></canvas>');
+  
+  var wrap = document.getElementById('all');
+  all.innerHTML = '&nbsp;';
+  $('#all').append('All States');
 
 
 
@@ -425,6 +429,9 @@ function setGraph1()
   wrap2.innerHTML = '&nbsp;';
   $('#wrap2').append('<canvas id="chart2"></canvas>');
 
+  var wrap = document.getElementById('all');
+  all.innerHTML = '&nbsp;';
+  $('#all').append('Click Here For All States');
 
 
   var s = document.getElementById('state').value;
@@ -653,7 +660,7 @@ thead{
 /*  background: #669999;
   color: rgb(209,224,224);
 */
-  background: #94b7e3;
+  background: #3cb9c7;
   font-size: 2em;
 }
 tbody tr:nth-child(even){
@@ -808,6 +815,7 @@ svg path:hover
 <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6">
+      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
         <div class="box tab">
                   <div id="state" value="Total" ></div>
                   <div class="wrap">
@@ -821,7 +829,7 @@ svg path:hover
 
                     <thead>
                     <tr>
-                      <th scope='col'>State</th>
+                      <th scope='col' style="margin-right: 200px">State</th>
                       <th scope='col'>C</th>
                     <th scope='col'>A</th>
                     <th scope='col'>R</th>
@@ -835,7 +843,7 @@ svg path:hover
         
 
                     <tr>
-                      <td>{{ item['state'] }}</td>
+                      <td style="margin-right: 200px">{{ item['state'] }}</td>
                       <td class='freq'>{{ item['cum_confirmed'] }}</td>
                       <td class='freq'>{{ item['cum_active'] }}</td>
                       <td class='freq'>{{ item['cum_recovered'] }}</td>
@@ -847,7 +855,7 @@ svg path:hover
                     
                     <tfoot>
                       <tr>
-                        <td>Total</td>
+                        <td style="margin-right: 200px" >  Total   </td>
                         <td>{{ total[0] }}</td>
                         <td>{{ total[1] }}</td>
                         <td>{{ total[2] }}</td>
@@ -861,8 +869,10 @@ svg path:hover
 </div>
 
     <div class="col-xs-12 col-sm-6 col-md-6">
-            <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
-
+            <h3 class="box " id = "all" onclick = "document.getElementById('state').value = 'Total'; setGraph();setGraph1();"style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;"></h3>
+          <!--   <h3 class="box " id = "state_name1" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3> -->
+      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">
+      Forecasting Graph</h3>
             {% block graph %}{% endblock %}
 
       <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Inference Graph</h3>
