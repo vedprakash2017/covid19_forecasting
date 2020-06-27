@@ -1,8 +1,15 @@
 from flask import Flask, Markup, render_template
 import json
 import copy
+# import DailyDataJson
+# import InferenceForecastDataJson
+
+
 app = Flask(__name__)
 
+
+# # DailyDataJson.dd()
+# InferenceForecastDataJson.ifd()
 
 with open('tableData.json') as f:
   data = json.load(f)
@@ -17,9 +24,12 @@ with open('InferenceData.json') as f:
   f1data = json.load(f)
 
 
-t_c = 0
-t_a = 0
-t_r = 0
+with open('TotalData.json') as f:
+  tdata = json.load(f)
+
+t_c = tdata[0]['cum_confirmed']
+t_a = tdata[0]['cum_active']
+t_r = tdata[0]['cum_recovered']
 st = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal']
 l = []
 g_data = {}
@@ -72,10 +82,10 @@ for i in g1_data.keys():
         for j in range(11):
             g1_data[i].append(['null','null','null'])
 
-for i in data:
-    t_c = t_c+int(i['cum_confirmed'])
-    t_a = t_a+int(i['cum_active'])
-    t_r = t_r+int(i['cum_recovered'])
+# for i in data:
+#     t_c = t_c+int(i['cum_confirmed'])
+#     t_a = t_a+int(i['cum_active'])
+#     t_r = t_r+int(i['cum_recovered'])
 
 
 total = [t_c,t_a,t_r]
