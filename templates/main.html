@@ -159,6 +159,11 @@ function setGraph()
 
 
   var s = document.getElementById('state').value;
+
+  if (typeof s === 'undefined' || s === null) 
+  {
+   s = 'Total';   
+  }
   document.getElementById('state_name').innerHTML = s;
   var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
   for (var i = 0 ; i<38; i++) {
@@ -447,6 +452,10 @@ function setGraph1()
 
 
   var s = document.getElementById('state').value;
+  if (typeof s === 'undefined' || s === null) 
+  {
+   s = 'Total';   
+  }
   document.getElementById('state_name').innerHTML = s;
   var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
 for (var i = 0 ; i<38; i++) {
@@ -834,7 +843,6 @@ span
 
 }
   </style>
-}
 
 </head>
 
@@ -904,7 +912,7 @@ span
       <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">
       Forecasting Graph</h3>
       <div class="box">
-          <span style="background-color:#173645;color: white;cursor:default;">Chosse   B</span>
+          <span style="background-color:#173645;color: white;cursor:default;">Choose   B</span>
           <span id='0.3' onclick="b='0.3';setGraph();setGraph1();">0.3</span> 
           <span id='0.4' onclick="b='0.4';setGraph();setGraph1();">0.4</span> 
           <span id='0.5' onclick="b='0.5';setGraph();setGraph1();">0.5</span> 
