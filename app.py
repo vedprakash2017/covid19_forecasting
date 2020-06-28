@@ -1,30 +1,30 @@
 from flask import Flask, Markup, render_template
 import json
 import copy
-import DailyDataJson
-import InferenceForecastDataJson
+# import DailyDataJson
+# import InferenceForecastDataJson
 import time
-import atexit
-from apscheduler.schedulers.background import BackgroundScheduler
+# import atexit
+# from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
-def change_data():
-    DailyDataJson.dd()
-    InferenceForecastDataJson.ifd(0.3)
-    InferenceForecastDataJson.ifd(0.4)
-    InferenceForecastDataJson.ifd(0.5)
-    InferenceForecastDataJson.ifd(0.6)
-    InferenceForecastDataJson.ifd(0.7)
-    InferenceForecastDataJson.ifd(0.8)
+# def change_data():
+#     DailyDataJson.dd()
+#     InferenceForecastDataJson.ifd(0.3)
+#     InferenceForecastDataJson.ifd(0.4)
+#     InferenceForecastDataJson.ifd(0.5)
+#     InferenceForecastDataJson.ifd(0.6)
+#     InferenceForecastDataJson.ifd(0.7)
+#     InferenceForecastDataJson.ifd(0.8)
 
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=change_data, trigger="cron", hour='00', minute='30')
-scheduler.start()
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(func=change_data, trigger="cron", hour='00', minute='30')
+# scheduler.start()
 
-# Shut down the scheduler when exiting the app
-atexit.register(lambda: scheduler.shutdown())
+# # Shut down the scheduler when exiting the app
+# atexit.register(lambda: scheduler.shutdown())
 b_values = ['0.3','0.4','0.5','0.7','0.6','0.8']
 
 tfbdata={}
