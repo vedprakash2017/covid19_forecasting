@@ -20,7 +20,7 @@ def change_data():
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=change_data, trigger="cron", hour='00', minute='10')
+scheduler.add_job(func=change_data, trigger="cron", hour='00', minute='30')
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
