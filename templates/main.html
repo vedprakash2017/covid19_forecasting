@@ -16,9 +16,15 @@
 
 
 <script>
+var b;
+var j;
 moment.suppressDeprecationWarnings = true;
 function ongraph()
 {
+  if (typeof b === 'undefined' || b === null) 
+  {
+    b = '0.7';
+  }
 
   var date = [];
   var c= [];
@@ -133,7 +139,6 @@ function ongraph()
 
 function setGraph() 
 {
-
   var date = [];
   var c= [];
   var a= [];
@@ -156,7 +161,7 @@ function setGraph()
   var s = document.getElementById('state').value;
   document.getElementById('state_name').innerHTML = s;
   var stt = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chandigarh','Chhattisgarh','Daman and Diu','Delhi','Dadra and Nagar Haveli and Daman and Diu','Goa','Gujarat','Himachal Pradesh','Haryana','Jharkhand','Jammu and Kashmir','Karnataka','Kerala','Ladakh','Lakshadweep','Maharashtra','Meghalaya','Manipur','Madhya Pradesh','Mizoram','Nagaland','Odisha','Punjab','Puducherry','Rajasthan','Sikkim','Telangana','Tamil Nadu','Total','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
-for (var i = 0 ; i<38; i++) {
+  for (var i = 0 ; i<38; i++) {
     if(s == stt[i])
       {break;}
   }
@@ -170,12 +175,21 @@ for (var i = 0 ; i<38; i++) {
       r.push('{{ i[3] }}')  ;    
       {% endfor %}
 
-      {% for j in fdata[st[p]] %}
-      fdate.push('{{ j[0] }}');
-      fc.push('{{ j[1] }}');
-      fa.push('{{ j[2] }}'); 
-      fr.push('{{ j[3] }}');    
+      {% for i in b_all%}
+      if('{{i}}' == b )
+      {
+        {% for j in alldata[1][i][st[p]] %}
+          fdate.push('{{ j[0] }}');
+          fc.push('{{ j[1] }}');
+          fa.push('{{ j[2] }}'); 
+          fr.push('{{ j[3] }}');
       {% endfor %}
+    }
+      {% endfor %}
+
+
+
+
     var ctx = document.getElementById('chart1').getContext('2d');
       var chart = new Chart(ctx, {
         type : 'line',
@@ -311,16 +325,15 @@ for (var i = 0 ; i<38; i++) {
 
 function ongraph1()
 {
-
   var date = [];
+  var c= [];
   var a= [];
   var r= [];
-  {% for i in gdata['Total'] %}
+  {% for i in alldata[2]['0.7']['Total'] %}
       date.push('{{ i[0] }}')
       a.push('{{ i[1] }}')  
       r.push('{{ i[2] }}')      
   {% endfor %}
-
 
 
   var ctx = document.getElementById('chart2').getContext('2d');
@@ -416,7 +429,6 @@ function ongraph1()
 
 function setGraph1() 
 {
-
   var date = [];
   var c= [];
   var a= [];
@@ -445,31 +457,39 @@ for (var i = 0 ; i<38; i++) {
     if(i == {{ p }})
     {
       var s1 = '';
-
-      {% for i in table2%}
+    
+    {% for i in b_all%}
+    if('{{i}}' == b )
+    {
+      {% for i in alldata[4][i]%}
         {% if i['state'] == st[p] %}
 
-        s1 = s1 + "<tr><td>{{ i['date'] }}</td><td class='freq'>{{i['cum_confirmed']}}</td><td class='freq'>{{i['cum_active']}}</td><td class='freq'>{{i['cum_recovered']}}</td></tr>"
+        s1 = s1 + "<tr><td>{{ i['date'] }}</td><td class='freq'>{{i['cum_confirmed']}}</td><td class='freq'>{{i['cum_active']}}</td><td class='freq'>{{i['cum_recovered']}}</td><td class='freq'>{{i['totaltested']}}</td></tr>"
         {%endif%}
       {% endfor %}
 
-      s1 = s1+"<tfoot><tr><td></td><td></td><td></td><td></td></tr></tfoot>";
+      s1 = s1+"<tfoot> <tr> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </tfoot>";
       document.getElementById("f_table").innerHTML =s1;
+    }
+    {% endfor %}
 
 
-
-
-      {% for i in g1data[st[p]] %}
+    {% for i in b_all%}
+    if('{{i}}' == b )
+    {
+      {% for i in alldata[2][i][st[p]] %}
       date.push('{{ i[0] }}');
       a.push('{{ i[1] }}') ; 
       r.push('{{ i[2] }}')  ;    
       {% endfor %}
 
-      {% for j in f1data[st[p]] %}
+      {% for j in alldata[3][i][st[p]] %}
       fdate.push('{{ j[0] }}');
       fa.push('{{ j[1] }}'); 
       fr.push('{{ j[2] }}');    
       {% endfor %}
+    }
+    {% endfor %}
     var ctx = document.getElementById('chart2').getContext('2d');
       var chart = new Chart(ctx, {
         type : 'line',
@@ -804,7 +824,17 @@ svg path:hover
   fill:#f5fcff; 
   stroke:#093c52;
 }
+span
+{
+  padding: 10px;
+  margin: 5px;
+  background-color: white;
+  color: #000;
+  cursor: pointer;
+
+}
   </style>
+}
 
 </head>
 
@@ -873,6 +903,15 @@ svg path:hover
           <!--   <h3 class="box " id = "state_name1" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3> -->
       <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">
       Forecasting Graph</h3>
+      <div class="box">
+          <span style="background-color:#173645;color: white;cursor:default;">Chosse   B</span>
+          <span id='0.3' onclick="b='0.3';setGraph();setGraph1();">0.3</span> 
+          <span id='0.4' onclick="b='0.4';setGraph();setGraph1();">0.4</span> 
+          <span id='0.5' onclick="b='0.5';setGraph();setGraph1();">0.5</span> 
+          <span id='0.6' onclick="b='0.6';setGraph();setGraph1();">0.6</span> 
+          <span id='0.7' onclick="b='0.7';setGraph();setGraph1();">0.7</span> 
+          <span id='0.8' onclick="b='0.8';setGraph();setGraph1();">0.8</span> 
+      </div>
             {% block graph %}{% endblock %}
 
       <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Inference Graph</h3>
@@ -892,6 +931,7 @@ svg path:hover
                       <th scope='col'>C</th>
                       <th scope='col'>A</th>
                       <th scope='col'>R</th>
+                      <th scope='col'>T</th>
                     </tr>
                     </thead>
                     
@@ -902,9 +942,11 @@ svg path:hover
                       <td class='freq'>-</td>
                       <td class='freq'>-</td>
                       <td class='freq'>-</td>
+                      <td class='freq'>-</td>
                     </tr>
                     <tfoot>
                       <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

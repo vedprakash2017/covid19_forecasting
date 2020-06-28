@@ -1,4 +1,4 @@
-def ifd():
+def ifd(b):
     # -*- coding: utf-8 -*-
     """InferenceForecastDataJson.ipynb
 
@@ -208,7 +208,7 @@ def ifd():
         data_subset = data[data['state']==s]
         data.loc[data_subset.index,'dailytested'] = round(data_subset['dailytested'].interpolate(method ='linear', limit_direction ='forward'))
 
-    b=0.75
+    # b=0.75
 
     data.loc[data.index,'alpha'] = (data.loc[data.index,'populationncp2019projection']/data.loc[data.index,'totaltested'])**b
 
@@ -354,7 +354,7 @@ def ifd():
       InferenceData.loc[InferenceSubset.index,'active'] = [round(j) for j in activeInference[:,i]*pop]
       InferenceData.loc[InferenceSubset.index,'recovered'] = [round(j) for j in recoveredInference[:,i]*pop]
 
-    InferenceData.to_json('InferenceData.json',orient='records')
+    InferenceData.to_json('InferenceData'+str(b)+'.json',orient='records')
 
     # train-> train dataset
     # test-> test dataset
@@ -454,12 +454,16 @@ def ifd():
             predicted_data.loc[index,'cum_recovered'] = cum_recovered
         predicted_data.loc[predicted_subset.index,'active'] = np.array(cum_active[1:]) - np.array(cum_active[:-1])
 
-    ForecastData = predicted_data[['state','date','cum_confirmed','cum_active','cum_recovered']]
-    ForecastData.to_json('ForecastGData.json',orient='records')
+    ForecastData = predicted_data[['state','date','cum_confirmed','cum_active','cum_recovered','totaltested']]
+
+    ForecastGraph = ForecastData[['state','date','cum_confirmed','cum_active','cum_recovered']]
+    ForecastGraph.to_json('ForecastGData'+str(b)+'.json',orient='records')
+
     #-- For thousand seperation
     ForecastData.loc[ForecastData.index,'cum_confirmed'] = ForecastData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
     ForecastData.loc[ForecastData.index,'cum_active'] = ForecastData['cum_active'].apply(lambda x : "{:,}".format(int(x)))
     ForecastData.loc[ForecastData.index,'cum_recovered'] = ForecastData['cum_recovered'].apply(lambda x : "{:,}".format(int(x)))
+    ForecastData.loc[ForecastData.index,'totaltested'] = ForecastData['totaltested'].apply(lambda x : "{:,}".format(int(x)))
     #--
 
-    ForecastData.to_json('ForecastData.json',orient='records')
+    ForecastData.to_json('ForecastData'+str(b)+'.json',orient='records')
