@@ -98,7 +98,7 @@ def ifd(b):
 
     G = nx.Graph()
     for i in range(1,len(states)+1):
-    if(i!= 8):
+    if (i!= 8):
         G.add_node(states[i])
     G.add_edges_from(edges)
 
@@ -165,9 +165,10 @@ def ifd(b):
     state_pop_data = state_pop_data.reset_index().drop(['index'], axis = 1)
     state_pop_data['populationncp2019projection'] = (state_pop_data['populationncp2019projection']).astype(int)
 
+
     state_testing_data = state_test_data[['state','totaltested','updatedon']].drop_duplicates().dropna(how='any',axis=0)
-    state_testing_data= state_testing_data[state_testing_data['totaltested']!='']
-    state_testing_data= state_testing_data.reset_index().drop(['index'], axis = 1)
+    state_testing_data = state_testing_data[state_testing_data['totaltested']!='']
+    state_testing_data = state_testing_data.reset_index().drop(['index'], axis = 1)
     state_testing_data = state_testing_data.rename(columns={"updatedon":"date"})
     state_testing_data['date'] = state_testing_data.apply(lambda x: datetime.strftime(datetime.strptime(x['date'], '%d/%m/%Y'), '%Y-%m-%d'), axis=1)
     state_testing_data['totaltested'] = (state_testing_data['totaltested']).astype(int)
@@ -208,10 +209,10 @@ def ifd(b):
         data.loc[data_subset.index,'dailytested'] = dailytest
 
     data.loc[data[data['dailytested']<0].index, 'dailytested'] = 0
-    data['dailytested'] = data['dailytested'].replace({0.0:np.nan})
+    data.loc[data.index,'dailytested'] = data['dailytested'].replace({0.0:np.nan})
 
     data.loc[data[data['confirmed']<0].index, 'confirmed'] = -1.0
-    data['confirmed'] = data['confirmed'].replace({-1.0:0.0})
+    data.loc[data.index,'confirmed'] = data['confirmed'].replace({-1.0:0.0})
 
     for s in data['state'].unique():
         data_subset = data[data['state']==s]
@@ -219,7 +220,7 @@ def ifd(b):
         data_subset = data[data['state']==s]
         data.loc[data_subset.index,'dailytested'] = round(data_subset['dailytested'].interpolate(method ='linear', limit_direction ='forward'))
 
-    b=0.55
+    # b=0.75
 
     data.loc[data.index,'alpha'] = (data.loc[data.index,'populationncp2019projection']/data.loc[data.index,'totaltested'])**b
 
@@ -297,10 +298,8 @@ def ifd(b):
         R1 = R[start_slice:end_slice]
         DR1 = DR[start_slice:end_slice]
         DX1 = DX[start_slice:end_slice]
-
         beta = cp.Variable(A.shape, nonneg = True)
         gamma = cp.Variable(A.shape, diag = True)
-        # delta = cp.Variable(A.shape, diag = True)
         constraints = []
     
         for i in range(A.shape[0]):
@@ -318,7 +317,6 @@ def ifd(b):
     # Function to forecast infection using beta and gamma values and Deterministic Method
 
     def get_forecast(B, Y, end_slice,param):
-        # print(end_slice, B[20],Y)
         S2 = np.zeros((forecast_time,A.shape[0]))
         X2 = np.zeros((forecast_time,A.shape[0]))
         R2 = np.zeros((forecast_time,A.shape[0]))
@@ -327,7 +325,6 @@ def ifd(b):
                 S2[j][i] = S[j][i]
                 X2[j][i] = X[j][i]
                 R2[j][i]= R[j][i]
-                # DEC2[j][i]= DEC[j][i]
         for i in range(A.shape[0]):
             for k in range(end_slice,forecast_time):
                 a = 0
@@ -377,7 +374,7 @@ def ifd(b):
         InferenceData.loc[InferenceSubset.index,'active'] = NotTotalSubset['active'].sum()
         InferenceData.loc[InferenceSubset.index,'recovered'] = NotTotalSubset['recovered'].sum()
 
-    InferenceData.to_json('InferenceData.json',orient='records')
+    InferenceData.to_json('InferenceData'+str(b)+'.json',orient='records')
 
     # train-> train dataset
     # test-> test dataset
@@ -443,7 +440,7 @@ def ifd(b):
         predicted_data.loc[predicted_subset.index, 'dailytested'] = daily_tested
 
         alpha = []
-        alpha.extend((pop/predicted_data.loc[predicted_subset.index, 'totaltested'].values)**0.55)
+        alpha.extend((pop/predicted_data.loc[predicted_subset.index, 'totaltested'].values)**b)
         alpha = np.array(alpha)
         predicted_data.loc[predicted_subset.index, 'alpha'] = alpha    
 
@@ -487,7 +484,7 @@ def ifd(b):
         ForecastData.loc[ForecastSubset.index,'totaltested'] = NotTotalSubset['totaltested'].sum()
 
     ForecastGraph = ForecastData[['state','date','cum_confirmed','cum_active','cum_recovered']]
-    ForecastGraph.to_json('ForecastGData.json',orient='records')
+    ForecastGraph.to_json('ForecastGData'+str(b)+'.json',orient='records')
 
     #-- For thousand seperation
     ForecastData.loc[ForecastData.index,'cum_confirmed'] = ForecastData['cum_confirmed'].apply(lambda x : "{:,}".format(int(x)))
@@ -496,4 +493,4 @@ def ifd(b):
     ForecastData.loc[ForecastData.index,'totaltested'] = ForecastData['totaltested'].apply(lambda x : "{:,}".format(int(x)))
     #--
 
-    ForecastData.to_json('ForecastData.json',orient='records')
+    ForecastData.to_json('ForecastData'+str(b)+'.json',orient='records')
