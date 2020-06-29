@@ -14,10 +14,6 @@ def ifd(b):
     import matplotlib.pyplot as plt
     from matplotlib.pyplot import figure
     import random
-    import requests
-    import lxml.html as lh
-    import re
-    import math
     import cvxpy as cp
     import warnings
     import itertools
@@ -98,17 +94,17 @@ def ifd(b):
 
     G = nx.Graph()
     for i in range(1,len(states)+1):
-    if (i!= 8):
-        G.add_node(states[i])
+        if (i!= 8):
+            G.add_node(states[i])
     G.add_edges_from(edges)
 
     A = nx.adjacency_matrix(G)
     A = A.todense()
     A = np.array(A)
     for i in range(len(A)):
-    for j in range(len(A[0])):
-        if(i == j):
-        A[i][j] += 1
+        for j in range(len(A[0])):
+            if(i == j):
+                A[i][j] += 1
 
     # Fetching the state wise historical infection data
 
@@ -220,7 +216,7 @@ def ifd(b):
         data_subset = data[data['state']==s]
         data.loc[data_subset.index,'dailytested'] = round(data_subset['dailytested'].interpolate(method ='linear', limit_direction ='forward'))
 
-    # b=0.75
+    # b=0.8
 
     data.loc[data.index,'alpha'] = (data.loc[data.index,'populationncp2019projection']/data.loc[data.index,'totaltested'])**b
 
@@ -301,7 +297,7 @@ def ifd(b):
         beta = cp.Variable(A.shape, nonneg = True)
         gamma = cp.Variable(A.shape, diag = True)
         constraints = []
-    
+
         for i in range(A.shape[0]):
             for j in range(A.shape[0]):     
                 if (A[i][j] == 0):
@@ -360,13 +356,14 @@ def ifd(b):
 
     InferenceData = pd.merge(InferenceData, state_date, on=['date','state'], how='right')
 
+    # For drawing inference on learned parameters upto current date
     activeInference = get_params(Time-7, Time, 'X')
     recoveredInference = get_params(Time-7, Time, 'R')
     for i in range(A.shape[0]):
-    InferenceSubset = InferenceData[InferenceData['state']==[*states.values()][i]]
-    pop = [*state_pop_data[state_pop_data['state']==[*states.values()][i]]['populationncp2019projection']][0]
-    InferenceData.loc[InferenceSubset.index,'active'] = [round(j) for j in activeInference[:,i]*pop]
-    InferenceData.loc[InferenceSubset.index,'recovered'] = [round(j) for j in recoveredInference[:,i]*pop]
+        InferenceSubset = InferenceData[InferenceData['state']==[*states.values()][i]]
+        pop = [*state_pop_data[state_pop_data['state']==[*states.values()][i]]['populationncp2019projection']][0]
+        InferenceData.loc[InferenceSubset.index,'active'] = [round(j) for j in activeInference[:,i]*pop]
+        InferenceData.loc[InferenceSubset.index,'recovered'] = [round(j) for j in recoveredInference[:,i]*pop]
 
     for date in InferenceData['date'].unique():
         InferenceSubset = InferenceData[(InferenceData['state']=='Total') & (InferenceData['date']==date)]
@@ -375,6 +372,23 @@ def ifd(b):
         InferenceData.loc[InferenceSubset.index,'recovered'] = NotTotalSubset['recovered'].sum()
 
     InferenceData.to_json('InferenceData'+str(b)+'.json',orient='records')
+
+    # For drawing inference on learned parameters upto 1 June
+    activeInference1June = get_params(44, 51, 'X')
+    recoveredInference1June = get_params(44, 51, 'R')
+    for i in range(A.shape[0]):
+        InferenceSubset = InferenceData[InferenceData['state']==[*states.values()][i]]
+        pop = [*state_pop_data[state_pop_data['state']==[*states.values()][i]]['populationncp2019projection']][0]
+        InferenceData.loc[InferenceSubset.index,'active'] = [round(j) for j in activeInference1June[:,i]*pop]
+        InferenceData.loc[InferenceSubset.index,'recovered'] = [round(j) for j in recoveredInference1June[:,i]*pop]
+
+    for date in InferenceData['date'].unique():
+        InferenceSubset = InferenceData[(InferenceData['state']=='Total') & (InferenceData['date']==date)]
+        NotTotalSubset = InferenceData[(InferenceData['state']!='Total') & (InferenceData['date']==date)]
+        InferenceData.loc[InferenceSubset.index,'active'] = NotTotalSubset['active'].sum()
+        InferenceData.loc[InferenceSubset.index,'recovered'] = NotTotalSubset['recovered'].sum()
+
+    InferenceData.to_json('InferenceData1June'+str(b)+'.json',orient='records')
 
     # train-> train dataset
     # test-> test dataset

@@ -30,10 +30,12 @@ b_values = ['0.3','0.4','0.5','0.7','0.6','0.8']
 tfbdata={}
 fbdata = {}
 f1bdata = {}
+f1b1junedata = {}
 
 f_data = {}
 
 f1_data = {}
+f1_1junedata = {}
 g1_data = {}
 
 g_data = {}
@@ -68,6 +70,7 @@ l = []
 
 for b in b_values:
     f1_data[b] = {}
+    f1_1junedata[b] = {}
 
 for b in b_values:
     with open('ForecastData'+b+'.json') as f:
@@ -78,6 +81,9 @@ for b in b_values:
 
     with open('InferenceData'+b+'.json') as f:
         f1bdata[b] = json.load(f)
+
+    with open('InferenceData1June'+b+'.json') as f:
+        f1b1junedata[b] = json.load(f)
 
     for j in st:
         for i in f1bdata[b]:
@@ -90,6 +96,19 @@ for b in b_values:
         f1_data[b][j] = l
         l = []
     l = []
+
+    for j in st:
+        for i in f1b1junedata[b]:
+            if i['state'] == j:
+                if i['active'] <0:
+                    i['active'] = 'null'
+                if i['recovered'] <0:
+                    i['recovered'] = 'null'
+                l.append([i['date'],i['active'],i['recovered']])
+        f1_1junedata[b][j] = l
+        l = []
+    l = []
+
     
     f_data[b] = copy.deepcopy(g_data)
     g1_data[b] = copy.deepcopy(f1_data[b])
@@ -101,12 +120,12 @@ for b in b_values:
 
     for i in g1_data[b].keys():
         if(len(g1_data[b][i]) != 0):
-            for j in range(11):
+            for j in range(15):
                 g1_data[b][i].pop()
-            for j in range(11):
+            for j in range(15):
                 g1_data[b][i].append(['null','null','null'])
         else:
-            for j in range(11):
+            for j in range(15):
                 g1_data[b][i].append(['null','null','null'])
 
 
@@ -121,7 +140,7 @@ for b in b_values:
 # with open('InferenceData0.7.json') as f:
 #   f1data = json.load(f)
 
-B_all_data = [tfbdata,f_data,g1_data,f1_data,tfbdata]
+B_all_data = [tfbdata,f_data,g1_data,f1_data,tfbdata,f1_1junedata]
 
 
 

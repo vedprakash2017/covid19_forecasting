@@ -223,6 +223,8 @@ function setGraph1()
   var fdate = [];
   var fa= [];
   var fr= [];
+  var fa1june= [];
+  var fr1june= [];
       
   var wrap = document.getElementById('wrap2');
   wrap2.innerHTML = '&nbsp;';
@@ -279,6 +281,12 @@ for (var i = 0 ; i<38; i++) {
       fa.push('{{ j[1] }}'); 
       fr.push('{{ j[2] }}');    
       {% endfor %}
+
+      {% for k in alldata[5][i][st[p]] %}
+      fdate.push('{{ k[0] }}');
+      fa1june.push('{{ k[1] }}'); 
+      fr1june.push('{{ k[2] }}');    
+      {% endfor %}
     }
     {% endfor %}
     var ctx = document.getElementById('chart2').getContext('2d');
@@ -320,6 +328,23 @@ for (var i = 0 ; i<38; i++) {
                     pointStyle: 'line',
                     data :r,
                   },   
+
+                  {            
+                    label:  'Forecasted Active from 1 June',
+                    borderColor: 'rgb(255, 0, 127)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fa1june,
+                  },
+                  {            
+                    label:  'Forecasted Recovered from 1 June',
+                    borderColor: 'rgb(255, 255, 0)',
+                    borderDash: [5,5],
+                    pointRadius:1,
+                    pointStyle: 'line',
+                    data :fr1june,
+                  },                    
 
                 ] 
               },
