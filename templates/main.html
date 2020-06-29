@@ -19,126 +19,13 @@
 var b;
 var j;
 moment.suppressDeprecationWarnings = true;
-function ongraph()
+function setGraph() 
 {
   if (typeof b === 'undefined' || b === null) 
   {
     b = '0.7';
   }
 
-  var date = [];
-  var c= [];
-  var a= [];
-  var r= [];
-  {% for i in gdata['Total'] %}
-      date.push('{{ i[0] }}')
-      c.push('{{ i[1] }}')
-      a.push('{{ i[2] }}')  
-      r.push('{{ i[3] }}')      
-  {% endfor %}
-
-
-
-  var ctx = document.getElementById('chart1').getContext('2d');
-      var chart = new Chart(ctx, {
-        type : 'line',
-        data : {
-              labels : date,
-              datasets : 
-                [
-                  {            
-                    label:  'Confirmed',
-                    borderColor: 'rgb(245, 66, 66)',
-                    pointRadius: 1,
-                    pointStyle: 'line',
-                    data :c,
-                  },
-                  {            
-                    label:  'Active',
-                    borderColor: 'rgb(66, 135, 245)',
-                    pointRadius: 1,
-                    pointStyle: 'line',
-                    data :a,
-                  },
-                  {            
-                    label:  'Recovered',
-                    borderColor: 'rgb(66, 245, 114)',
-                    pointRadius: 1,
-                    pointStyle: 'line',
-                    data :r,
-                  },
-
-                ] 
-              },
-              options: {
-                legend: {
-                           labels: {
-            usePointStyle: true,
-            fontColor: 'white'
-         },
-                  display:true
-                  },
-                tooltips: {
-                   callbacks: {
-                      label: function(tooltipItem) {
-                          return tooltipItem.yLabel;
-                                }
-                              }
-                    },
-                elements: {
-                  line: {
-                      fill: false,
-                      tension: 0
-                      }
-                  },
-                animation: {
-                  duration: 0 
-                  },
-                hover:{
-                  animationDuration: 0 
-                  },
-                responsiveAnimationDuration: 0 ,
-                maintainAspectRatio:false,
-                scales: {
-                  xAxes: [{
-                                 gridLines: {
-                                 zeroLineColor: '#ffcc33',
-                                 color:'white',
-                                 lineWidth:0.3
-                                },
-                                type: 'time',
-                                time: {
-                                  unit:'week'
-
-                                },
-                                ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 20,
-                                fontSize: 13,
-                                fontColor: "white"
-
-                            }
-                        }],
-
-                  yAxes: [{
-                                 gridLines: {
-                                 zeroLineColor: '#ffcc33',
-                                 color:'white',
-                                 lineWidth:0.3
-                                },
-                              ticks : {
-                              beginAtZero: true,
-                              fontColor: "white"
-                            }
-                        }]
-                        }
-                      }
-            });
-
-}
-
-function setGraph() 
-{
   var date = [];
   var c= [];
   var a= [];
@@ -326,111 +213,6 @@ function setGraph()
 
 
 
-
-
-function ongraph1()
-{
-  var date = [];
-  var c= [];
-  var a= [];
-  var r= [];
-  {% for i in alldata[2]['0.7']['Total'] %}
-      date.push('{{ i[0] }}')
-      a.push('{{ i[1] }}')  
-      r.push('{{ i[2] }}')      
-  {% endfor %}
-
-
-  var ctx = document.getElementById('chart2').getContext('2d');
-      var chart = new Chart(ctx, {
-        type : 'line',
-        data : {
-              labels : date,
-              datasets : 
-                [
-                  
-                  {            
-                    label:  'Active',
-                    borderColor: 'rgb(66, 135, 245)',
-                    pointRadius: 1,
-                    pointStyle: 'line',
-                    data :a,
-                  },
-                  {            
-                    label:  'Recovered',
-                    borderColor: 'rgb(66, 245, 114)',
-                    pointRadius: 1,
-                    pointStyle: 'line',
-                    data :r,
-                  },
-                ] 
-              },
-              options: {
-                legend: {
-                                  labels: {
-            usePointStyle: true,
-            fontColor: 'white'
-         },
-                  display:true
-                  },
-                tooltips: {
-                   callbacks: {
-                      label: function(tooltipItem) {
-                          return tooltipItem.yLabel;
-                                }
-                              }
-                    },
-                elements: {
-                  line: {
-                      fill: false,
-                      tension: 0
-                      }
-                  },
-                animation: {
-                  duration: 0 
-                  },
-                hover:{
-                  animationDuration: 0 
-                  },
-                responsiveAnimationDuration: 0 ,
-                maintainAspectRatio:false,
-                scales: {
-                  xAxes: [{
-                                 gridLines: {
-                                 zeroLineColor: '#ffcc33',
-                                 color:'white',
-                                 lineWidth:0.3
-                                },
-                                type: 'time',
-                                time: {
-                                  unit:'week'
-
-                                },
-                                ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 20,
-                                fontSize: 13,
-                              fontColor: "white"
-
-                            }
-                        }],
-
-                  yAxes: [{
-                                 gridLines: {
-                                 zeroLineColor: '#ffcc33',
-                                 color:'white',
-                                 lineWidth:0.3
-                                },
-                              ticks : {
-                              beginAtZero: true,
-                              fontColor: "white"
-                            }
-                        }]
-                        }
-                      }
-            });
-
-}
 
 function setGraph1() 
 {
@@ -846,7 +628,7 @@ span
 
 </head>
 
-<body onload="ongraph();ongraph1();" style="background-color: #173645;color:white">
+<body onload="setGraph();setGraph1();" style="background-color: #173645;color:white">
 
 
 <h2> Covid19 Forecasting </h2>
