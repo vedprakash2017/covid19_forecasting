@@ -660,6 +660,8 @@ h3{
   color: white;
   border: none;
 }
+
+
   </style>
 
 
@@ -672,7 +674,7 @@ h3{
 <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6">
-      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3>
+      <h3 class="box " id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;">All States</h3>
         <div class="box tab">
                   <div id="state" value="Total" ></div>
                   <div class="wrap">
@@ -726,10 +728,11 @@ h3{
 </div>
 
     <div class="col-xs-12 col-sm-6 col-md-6">
-            <h3 class="box " id = "all" onclick = "document.getElementById('state').value = 'Total'; setGraph();setGraph1();"style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;"></h3>
-          <!--   <h3 class="box " id = "state_name1" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">All States</h3> -->
-      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">
+            <h3 class="box " id = "all" onclick = "document.getElementById('state').value = 'Total'; setGraph();setGraph1();"style="font-family:'Lucida Console',fantasy;font-size:20px;"></h3>
+          <!--   <h3 class="box " id = "state_name1" style="font-family:'Lucida Console',fantasy;font-size:20px;">All States</h3> -->
+      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;">
       Forecasting Graph</h3>
+            {% block graph %}{% endblock %}
       <div class="box">
           <div style="background-color:#173645;color: white;cursor:default;">Choose B</div>
           <div id = "mydiv">
@@ -741,13 +744,11 @@ h3{
           <button class="v" onclick="b='0.8';setGraph();setGraph1();">0.8</button> 
           </div>
       </div>
-            {% block graph %}{% endblock %}
-
-      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Inference Graph</h3>
+      <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;">Inference Graph</h3>
             {% block graph1 %}{% endblock %}
 
 
-      <h3 class="box" id = "state_name t1" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">Forecasting Table</h3>
+      <h3 class="box" id = "state_name t1" style="font-family:'Lucida Console',fantasy;font-size:20px;">Forecasting Table</h3>
         <div class="box tab" id ="t2" style="">
 
               <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
@@ -788,6 +789,13 @@ h3{
                   </table>
       
                 </div>
+            </div>
+            <div class="row" style="text-align: left;margin-left:5%;margin-right:5%;border: 5px solid white;padding-left:20% ">
+              <h4 style="color:red; ">C - stands for Confirmed</h4>
+              <h4 style="color:blue; ">A - stands for Active</h4>
+              <h4 style="color:green">R - stands for Recovered</h4>
+              <h4 style="color:">T - stands for Tested</h4>
+              <h4 style="color: ">B - stands for Bias factor</h4>
             </div>
     </div>
 
