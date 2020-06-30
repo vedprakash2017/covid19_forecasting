@@ -19,6 +19,7 @@
 var b;
 var j;
 moment.suppressDeprecationWarnings = true;
+
 function setGraph() 
 {
   if (typeof b === 'undefined' || b === null) 
@@ -635,21 +636,32 @@ h3{
     overflow-x: auto;
     width: 28rem;
 }
-svg path:hover
+
+.actpath , svg path:hover
 {
   fill:#f5fcff; 
   stroke:#093c52;
 }
-span
+
+.v
 {
   padding: 10px;
   margin: 5px;
-  background-color: white;
+  background-color: #f1f1f1;
   color: #000;
   cursor: pointer;
+  border: none;
 
 }
+
+.active , .v:hover
+{
+  background-color: #666;
+  color: white;
+  border: none;
+}
   </style>
+
 
 </head>
 
@@ -719,13 +731,15 @@ span
       <h3 class="box" id = "state_name" style="font-family:'Lucida Console',fantasy;font-size:20px;text-decoration: underline;">
       Forecasting Graph</h3>
       <div class="box">
-          <span style="background-color:#173645;color: white;cursor:default;">Choose   B</span>
-          <span id='0.3' onclick="b='0.3';setGraph();setGraph1();">0.3</span> 
-          <span id='0.4' onclick="b='0.4';setGraph();setGraph1();">0.4</span> 
-          <span id='0.5' onclick="b='0.5';setGraph();setGraph1();">0.5</span> 
-          <span id='0.6' onclick="b='0.6';setGraph();setGraph1();">0.6</span> 
-          <span id='0.7' onclick="b='0.7';setGraph();setGraph1();">0.7</span> 
-          <span id='0.8' onclick="b='0.8';setGraph();setGraph1();">0.8</span> 
+          <div style="background-color:#173645;color: white;cursor:default;">Choose B</div>
+          <div id = "mydiv">
+          <button class="v" onclick="b='0.3';setGraph();setGraph1();">0.3</button> 
+          <button class="v" onclick="b='0.4';setGraph();setGraph1();">0.4</button> 
+          <button class="v" onclick="b='0.5';setGraph();setGraph1();">0.5</button> 
+          <button class="v" onclick="b='0.6';setGraph();setGraph1();">0.6</button> 
+          <button class="v active" onclick="b='0.7';setGraph();setGraph1();">0.7</button> 
+          <button class="v" onclick="b='0.8';setGraph();setGraph1();">0.8</button> 
+          </div>
       </div>
             {% block graph %}{% endblock %}
 
@@ -782,5 +796,29 @@ span
 
     
   </div>
+
+<script type="text/javascript">
+  
+  // Add active class to the current button (highlight it)
+var header = document.getElementById("mydiv");
+var btns = header.getElementsByClassName("v");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
+
+// var header = document.getElementById("sv");
+// var btns = header.getElementsByClassName("p");
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function() {
+//   var current = document.getElementsByClassName("actpath");
+//   current[0].className = current[0].className.replace(" actpath", "");
+//   this.className += " actpath";
+//   });
+// }
+</script>
 </body>
 </html>
